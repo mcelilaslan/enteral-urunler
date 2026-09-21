@@ -200,16 +200,42 @@
   .tag-diab{color:var(--amber); background:var(--amber-soft);}
   .tag-immun{color:var(--coral); background:var(--coral-soft);}
   .tag-renal{color:var(--accent); background:var(--accent-soft);}
-  .tag-osm{color:var(--amber); background:var(--amber-soft); cursor:help;}
+  .tag-osm{color:var(--amber); background:var(--amber-soft); cursor:pointer; border:none; font-family:var(--mono);}
+  .tag-osm:hover{filter:brightness(0.95);}
+
+  #osmPopover{
+    position:fixed; z-index:200; max-width:270px;
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius-m);
+    padding:13px 15px; font-size:12.5px; line-height:1.5; color:var(--text-dim);
+    box-shadow:0 8px 24px rgba(0,0,0,0.18);
+    display:none;
+  }
+  #osmPopover .op-title{font-family:var(--mono); font-weight:700; color:var(--amber); font-size:12.5px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; gap:8px;}
+  #osmPopover .op-close{cursor:pointer; color:var(--text-faint); font-size:15px; line-height:1; background:none; border:none; padding:0;}
+  #osmPopover .op-close:hover{color:var(--text);}
   .card-head h2{font-family:var(--serif); font-size:21px; font-weight:500; margin:0 0 6px; line-height:1.2;}
   .indication{font-size:13px; color:var(--text-dim); margin:0; line-height:1.45;}
   .meta-row{display:flex; gap:14px; margin-top:10px; font-size:11.5px; color:var(--text-faint); font-family:var(--mono);}
 
   .headline-nums{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--border-soft); border-bottom:1px solid var(--border-soft);}
-  .headline-nums .hn{background:var(--panel-2); padding:11px 8px; text-align:center;}
-  .headline-nums .hn .v{font-family:var(--mono); font-size:16px; font-weight:600; color:var(--accent);}
-  .headline-nums .hn .u{font-size:9.5px; color:var(--text-faint); margin-top:2px;}
-  .headline-nums .hn.fiber-none .v{color:var(--text-faint);}
+  .headline-nums .hn{background:var(--panel-2); padding:13px 6px 11px; text-align:center; border-top:3px solid transparent; position:relative;}
+  .headline-nums .hn .v{font-family:var(--mono); font-size:19px; font-weight:700; letter-spacing:-0.01em;}
+  .headline-nums .hn .u{font-size:9.5px; color:var(--text-faint); margin-top:3px; letter-spacing:.01em;}
+  .headline-nums .hn.fiber-none .v{color:var(--text-faint); font-weight:600;}
+  .headline-nums .hn.stat-kcal{border-top-color:var(--accent);}
+  .headline-nums .hn.stat-kcal .v{color:var(--accent);}
+  .headline-nums .hn.stat-protein{border-top-color:#3f7fc4;}
+  .headline-nums .hn.stat-protein .v{color:#3f7fc4;}
+  :root[data-theme="dark"] .headline-nums .hn.stat-protein{border-top-color:#7fb4e8;}
+  :root[data-theme="dark"] .headline-nums .hn.stat-protein .v{color:#7fb4e8;}
+  .headline-nums .hn.stat-fiber{border-top-color:#8a5cc2;}
+  .headline-nums .hn.stat-fiber .v{color:#8a5cc2;}
+  :root[data-theme="dark"] .headline-nums .hn.stat-fiber{border-top-color:#c39ee8;}
+  :root[data-theme="dark"] .headline-nums .hn.stat-fiber .v{color:#c39ee8;}
+  .headline-nums .hn.stat-osm{border-top-color:var(--text-faint);}
+  .headline-nums .hn.stat-osm .v{color:var(--text-dim);}
+  .headline-nums .hn.stat-osm.high{border-top-color:var(--bad);}
+  .headline-nums .hn.stat-osm.high .v{color:var(--bad);}
 
   .dose-strip{
     padding:14px 18px;
@@ -351,6 +377,11 @@
 </div>
 
 <main class="wrap" id="main"></main>
+
+<div id="osmPopover" role="dialog" aria-label="Hiperosmolarite bilgisi">
+  <div class="op-title"><span>⚠ Hiperosmolar</span><button class="op-close" id="osmPopoverClose" aria-label="Kapat">✕</button></div>
+  <div id="osmPopoverBody"></div>
+</div>
 
 <footer class="wrap">
   <div>Değerler, üreticilerin ürün etiketleri ve teknik bilgi föylerinden 100 ml için derlenmiştir. ESPEN hedef karşılama hesabı, seçilen kcal/kg/gün değeriyle gereken formül hacmi üzerinden yapılan bir yaklaşımdır (protein/yağ/klor kg'a göre, diğer mikrobesinler mutlak günlük hedeflere göre); ek oral alım, IV destek veya kayıplar hesaba katılmaz. Karbonhidrat hedefi, ESPEN'in 5 mg/kg/dk infüzyon hızı önerisinin 24 saatlik sürekli uygulamaya yaklaşık dönüşümüdür (≈7.2 g/kg/gün). Ozmolarite 400 mOsm/l üzerindeki ürünler hiperosmolar kabul edilir ve özellikle jejunal/hızlı bolus uygulamada diyare riski taşıyabilir. Klinik karar öncesi güncel SmPC / ürün prospektüsü ve hastaya özgü hedeflerle teyit edilmelidir.</div>
@@ -633,7 +664,7 @@
     if(p.diyabetik) tags.push('<span class="tag tag-diab">Diyabetik</span>');
     if(p.immun) tags.push('<span class="tag tag-immun">İmmün</span>');
     if(p.renal) tags.push('<span class="tag tag-renal">Renal</span>');
-    if(p.osmolarite && p.osmolarite > 400) tags.push(`<span class="tag tag-osm" title="Ozmolarite ${fmtNum(p.osmolarite,0)} mOsm/l — 400 üzerinde hiperosmolar, diyare riski artabilir">Hiperosmolar</span>`);
+    if(p.osmolarite && p.osmolarite > 400) tags.push(`<button type="button" class="tag tag-osm" data-osm="${fmtNum(p.osmolarite,0)}">Hiperosmolar ⓘ</button>`);
 
     let head = document.createElement('div');
     head.className = 'card-head';
@@ -651,13 +682,14 @@
     `;
     el.appendChild(head);
 
+    const isHyperosm = p.osmolarite && p.osmolarite > 400;
     const hn = document.createElement('div');
     hn.className = 'headline-nums';
     hn.innerHTML = `
-      <div class="hn"><div class="v">${fmtNum(p.kcal100/100)}</div><div class="u">kcal /cc</div></div>
-      <div class="hn"><div class="v">${fmtNum(p.protein100)}</div><div class="u">g protein /100ml</div></div>
-      <div class="hn ${p.lifVar ? '' : 'fiber-none'}"><div class="v">${p.lifVar ? fmtNum(p.lif100) : '—'}</div><div class="u">g lif /100ml</div></div>
-      <div class="hn"><div class="v">${ppk !== null ? fmtNum(ppk) : '—'}</div><div class="u">g prot./100kcal</div></div>
+      <div class="hn stat-kcal"><div class="v">${fmtNum(p.kcal100/100)}</div><div class="u">kcal / cc</div></div>
+      <div class="hn stat-protein"><div class="v">${fmtNum(p.protein100)}</div><div class="u">g protein /100ml</div></div>
+      <div class="hn stat-fiber ${p.lifVar ? '' : 'fiber-none'}"><div class="v">${p.lifVar ? fmtNum(p.lif100) : '—'}</div><div class="u">g lif /100ml</div></div>
+      <div class="hn stat-osm ${isHyperosm ? 'high' : ''}"><div class="v">${p.osmolarite ? fmtNum(p.osmolarite,0) : '—'}</div><div class="u">mOsm/l</div></div>
     `;
     el.appendChild(hn);
 
@@ -768,6 +800,38 @@
   }
 
   render();
+
+  // ---------- Hiperosmolar popover ----------
+  const osmPopover = document.getElementById('osmPopover');
+  const osmPopoverBody = document.getElementById('osmPopoverBody');
+  function openOsmPopover(targetEl, value){
+    osmPopoverBody.textContent = `Ozmolarite: ${value} mOsm/l. 400 mOsm/l üzerindeki formüller hiperosmolar kabul edilir; özellikle jejunal uygulamada veya hızlı bolus verildiğinde ozmotik diyare riski artabilir. Yavaş infüzyon, kademeli başlangıç veya su ile seyreltme düşünülebilir.`;
+    osmPopover.style.display = 'block';
+    const r = targetEl.getBoundingClientRect();
+    const popW = 270;
+    let left = r.left;
+    if(left + popW > window.innerWidth - 12) left = window.innerWidth - popW - 12;
+    if(left < 12) left = 12;
+    let top = r.bottom + 8;
+    if(top + 140 > window.innerHeight){ top = r.top - 8; osmPopover.style.transform = 'translateY(-100%)'; }
+    else { osmPopover.style.transform = 'none'; }
+    osmPopover.style.left = left + 'px';
+    osmPopover.style.top = top + 'px';
+  }
+  function closeOsmPopover(){ osmPopover.style.display = 'none'; }
+  document.addEventListener('click', (e) => {
+    const tag = e.target.closest('.tag-osm');
+    if(tag){
+      e.stopPropagation();
+      openOsmPopover(tag, tag.dataset.osm);
+      return;
+    }
+    if(!e.target.closest('#osmPopover')) closeOsmPopover();
+  });
+  document.getElementById('osmPopoverClose').addEventListener('click', closeOsmPopover);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeOsmPopover(); });
+  window.addEventListener('scroll', closeOsmPopover, true);
+  window.addEventListener('resize', closeOsmPopover);
 
   // ---------- PWA ----------
   if('serviceWorker' in navigator){
