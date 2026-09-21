@@ -218,8 +218,8 @@
   .meta-row{display:flex; gap:14px; margin-top:10px; font-size:11.5px; color:var(--text-faint); font-family:var(--mono);}
 
   .headline-nums{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--border-soft); border-bottom:1px solid var(--border-soft);}
-  .headline-nums .hn{background:var(--panel-2); padding:13px 6px 11px; text-align:center; border-top:3px solid transparent; position:relative;}
-  .headline-nums .hn .v{font-family:var(--mono); font-size:19px; font-weight:700; letter-spacing:-0.01em;}
+  .headline-nums .hn{background:var(--panel-2); padding:13px 6px 11px; text-align:center; border-top:3px solid transparent; position:relative; min-width:0;}
+  .headline-nums .hn .v{font-family:var(--mono); font-size:18px; font-weight:700; letter-spacing:-0.01em; overflow-wrap:break-word;}
   .headline-nums .hn .u{font-size:9.5px; color:var(--text-faint); margin-top:3px; letter-spacing:.01em;}
   .headline-nums .hn.fiber-none .v{color:var(--text-faint); font-weight:600;}
   .headline-nums .hn.stat-kcal{border-top-color:var(--accent);}
@@ -278,11 +278,12 @@
   details.cat summary .sub-count.has-issue{background:var(--bad-soft); color:var(--bad);}
   details.cat summary .sub-count.all-ok{background:var(--good-soft); color:var(--good);}
   .cat-table{width:100%; border-collapse:collapse; font-size:12.5px; margin:0 0 10px;}
-  .cat-table td{padding:4px 10px; border-bottom:1px dashed var(--border-soft); vertical-align:middle;}
-  .cat-table tr:last-child td{border-bottom:none;}
-  .cat-table td.k{color:var(--text-dim); display:flex; align-items:center; gap:7px;}
-  .cat-table td.v{font-family:var(--mono); text-align:right; color:var(--text); white-space:nowrap;}
-  .cat-table td.v .daily{display:block; font-size:10.5px; color:var(--text-faint); margin-top:1px;}
+  .cat-table .item{border-bottom:1px dashed var(--border-soft); padding:6px 10px;}
+  .cat-table .item:last-child{border-bottom:none;}
+  .cat-table .item-main{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  .cat-table .item-main .k{color:var(--text-dim); display:flex; align-items:center; gap:7px; min-width:0;}
+  .cat-table .item-main .v{font-family:var(--mono); text-align:right; color:var(--text); white-space:nowrap; flex:none;}
+  .cat-table .item-ratio{font-size:10.5px; color:var(--text-faint); text-align:right; margin-top:1px;}
   .dot{width:8px; height:8px; border-radius:50%; flex:none; display:inline-block;}
   .dot.ok{background:var(--good);}
   .dot.low, .dot.high{background:var(--bad);}
@@ -401,7 +402,6 @@
     "Özel":"Özel bileşenler",
     "Fizikokimya":"Fizikokimyasal özellikler"
   };
-  const CAT_OPEN_DEFAULT = { "Makro": true };
 
   const TARGETS = {
     "Protein": {type:'min', perKg:1.2, note:'ESPEN: 1.2–1.5 g/kg/gün (KRT/obezitede 2.0 g/kg/güne kadar)'},
@@ -687,7 +687,7 @@
     hn.className = 'headline-nums';
     hn.innerHTML = `
       <div class="hn stat-kcal"><div class="v">${fmtNum(p.kcal100/100)}</div><div class="u">kcal / cc</div></div>
-      <div class="hn stat-protein"><div class="v">${fmtNum(p.protein100)}</div><div class="u">g protein /100ml</div></div>
+      <div class="hn stat-protein"><div class="v">${ppk !== null ? fmtNum(ppk) : '—'}</div><div class="u">g prot./100kcal</div></div>
       <div class="hn stat-fiber ${p.lifVar ? '' : 'fiber-none'}"><div class="v">${p.lifVar ? fmtNum(p.lif100) : '—'}</div><div class="u">g lif /100ml</div></div>
       <div class="hn stat-osm ${isHyperosm ? 'high' : ''}"><div class="v">${p.osmolarite ? fmtNum(p.osmolarite,0) : '—'}</div><div class="u">mOsm/l</div></div>
     `;
@@ -725,8 +725,6 @@
       det.className = 'cat';
 
       let subCount = '';
-      let catHasIssue = false;
-      let catAllOk = false;
       if(dose){
         let catOk=0, catTotal=0;
         rows.forEach(r => {
@@ -734,39 +732,43 @@
           if(res){ catTotal++; if(res.status==='ok') catOk++; }
         });
         if(catTotal){
-          catHasIssue = catOk < catTotal;
-          catAllOk = catOk === catTotal;
+          const catHasIssue = catOk < catTotal;
           subCount = `<span class="sub-count ${catHasIssue ? 'has-issue' : 'all-ok'}">${catOk}/${catTotal} hedef</span>`;
         }
       }
-
-      det.open = CAT_OPEN_DEFAULT[cat] || catHasIssue;
 
       const sum = document.createElement('summary');
       sum.innerHTML = `<span>${CAT_LABEL[cat]}${subCount}</span><span class="chev">▸</span>`;
       det.appendChild(sum);
 
-      const table = document.createElement('table');
+      const table = document.createElement('div');
       table.className = 'cat-table';
       rows.forEach(r => {
         if(!r.deger || r.deger === '-') return;
-        const tr = document.createElement('tr');
+        const item = document.createElement('div');
+        item.className = 'item';
         const res = dose ? dose.results[r.bilesen] : null;
         let dot = '';
         let title = '';
-        let dailyLine = '';
+        let ratioLine = '';
         if(res){
           dot = `<span class="dot ${res.status}"></span>`;
           const cmp = res.status === 'ok' ? '✓ hedefte' : (res.type === 'max' ? '✗ hedefi aşıyor' : '✗ hedefin altında');
           title = `${res.note} — günlük: ${fmtNum(res.delivered,1)}, hedef: ${fmtNum(res.target,1)} ${cmp}`;
-          dailyLine = `<span class="daily">${fmtNum(res.delivered,1)}/gün</span>`;
+          ratioLine = `<div class="item-ratio">${fmtNum(res.delivered,1)} / ${fmtNum(res.target,1)} (hedef)</div>`;
         } else if(TARGETS[r.bilesen]){
           dot = `<span class="dot neutral"></span>`;
           title = 'Hedef karşılama için hasta kilosunu girin.';
         }
-        tr.title = title;
-        tr.innerHTML = `<td class="k">${dot}${r.bilesen}${r.birim ? ' <span style="color:var(--text-faint)">('+r.birim+')</span>' : ''}</td><td class="v">${r.deger}${dailyLine}</td>`;
-        table.appendChild(tr);
+        item.title = title;
+        item.innerHTML = `
+          <div class="item-main">
+            <span class="k">${dot}<span>${r.bilesen}${r.birim ? ' <span style="color:var(--text-faint)">('+r.birim+')</span>' : ''}</span></span>
+            <span class="v">${r.deger}</span>
+          </div>
+          ${ratioLine}
+        `;
+        table.appendChild(item);
       });
       det.appendChild(table);
 
