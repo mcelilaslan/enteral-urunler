@@ -1,0 +1,17 @@
+{
+  "name": "Enteral Ürünler — ESPEN Hedef Karşılaştırma",
+  "short_name": "Enteral Ürünler",
+  "description": "Enteral beslenme ürünlerinin hasta kilosuna göre günlük ESPEN hedef karşılama analizi.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d1817",
+  "theme_color": "#0d1817",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
