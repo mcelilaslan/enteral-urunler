@@ -365,8 +365,7 @@
         <select class="scenario-select" id="scenarioSelect">
           <option value="manuel">Manuel hedef girişi (serbest kcal/kg ve protein/kg)</option>
           <option value="genel-servis">Genel servis / polimorbid (kritik olmayan)</option>
-          <option value="yb-akut">Yoğun bakım — standart akut (ilk 72 saat)</option>
-          <option value="yb-postakut">Yoğun bakım — post-akut (&gt;3. gün)</option>
+          <option value="yb-postakut">Yoğun bakım — standart kritik hasta</option>
           <option value="yb-travma">Yoğun bakım — travma / majör cerrahi / açık karın</option>
           <option value="yb-obez">Yoğun bakım — obez kritik hasta</option>
           <option value="renal-aki">Kritik hasta + AKI (diyaliz almıyor)</option>
@@ -499,17 +498,11 @@
       note: "Polimorbid dahiliye/genel servis hastası. Malnütrisyon riski veya yaşlılıkta protein hedefi 1.2–1.5 g/kg/gün'e yükseltilebilir.",
       elderlyToggle: true, elderlyProMin:1.2, elderlyProMax:1.5, elderlyProDef:1.35
     },
-    "yb-akut": {
-      label: "YB — standart akut (ilk 72 saat)",
-      kcalMin:20, kcalMax:20, kcalDef:20,
-      proMin:1.3, proMax:1.3, proDef:1.3,
-      note: "Akut faz (1-3. gün): hipokalorik beslenme (~20 kcal/kg/gün, hedefin <%70'i). Protein hedefine (1.3 g/kg) aşırı yüklenmeden kademeli çıkılır."
-    },
     "yb-postakut": {
-      label: "YB — post-akut (>3. gün)",
+      label: "YB — standart kritik hasta (medikal/cerrahi)",
       kcalMin:25, kcalMax:30, kcalDef:27,
       proMin:1.3, proMax:1.3, proDef:1.3,
-      note: "Post-akut/iyileşme fazı (>3. gün): enerji hedefi 25–30 kcal/kg/gün'e yükseltilir, protein 1.3 g/kg/gün'de sürdürülür."
+      note: "Enerji hedefi 25–30 kcal/kg/gün, protein 1.3 g/kg/gün (kademeli olarak ulaşılır)."
     },
     "yb-travma": {
       label: "YB — travma / majör cerrahi / açık karın",
