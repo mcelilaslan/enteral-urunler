@@ -917,15 +917,13 @@
       }
     }
 
-    // ---- clinical badge: CRRT / travma + standard (non-fortified) formula + protein gap ----
+   // ---- clinical badge: CRRT / travma + protein gap ----
     let clinicalWarning = null;
     const sc = state.scenario !== 'manuel' ? SCENARIOS[state.scenario] : null;
-    if(sc && sc.highProteinDemand === true || state.scenario === 'yb-travma'){
-      const ppk = proteinPer100kcal(p);
-      const isStandardFormula = !p.diyabetik && !p.renal && !p.immun && (ppk === null || ppk < 6);
-      if(protein && protein.tier !== 'ok' && isStandardFormula){
-        clinicalWarning = 'Dikkat: Bu ürünle kalori hedefine ulaşıldığında protein açığı kalmaktadır; protein modülü (ek enteral protein) gerekebilir.';
-      }
+    const isHighDemandScenario = (sc && sc.highProteinDemand === true) || state.scenario === 'yb-travma';
+
+    if (isHighDemandScenario && protein && protein.tier !== 'ok') {
+      clinicalWarning = 'Dikkat: Bu ürünle kalori hedefine ulaşıldığında protein açığı kalmaktadır; protein desteği gerekebilir.';
     }
 
     return {targetKcal, dailyVolume, results, ok, total, protein, clinicalWarning};
