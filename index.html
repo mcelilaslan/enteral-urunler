@@ -788,7 +788,7 @@
       summary.style.display = 'flex';
       document.getElementById('dsKcal').textContent = Math.round(state.targetKcalPerDay);
       document.getElementById('dsProtein').textContent = fmtNum(state.targetProteinPerDay,1);
-      hint.textContent = 'Yeşil: hedefte · Turuncu: hedefe yakın · Kırmızı: hedefin belirgin altında/üstünde. (' + state.weight + ' kg, ' + (state.scenario==='manuel' ? 'manuel hedef' : SCENARIOS[state.scenario].label) + ')';
+      hint.textContent = 'Yeşil: hedefte · Turuncu: hedefe yakın · Kırmızı: hedefin belirgin altında. (' + state.weight + ' kg, ' + (state.scenario==='manuel' ? 'manuel hedef' : SCENARIOS[state.scenario].label) + ')';
     } else {
       summary.style.display = 'none';
       hint.textContent = 'Hedef karşılama renklerini görmek için hasta kilosunu girin ve bir klinik senaryo seçin (obez senaryosunda boy/cinsiyet de gerekir).';
