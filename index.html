@@ -113,7 +113,7 @@
     gap:20px;
     align-items:flex-end;
   }
-  .dose-field{display:flex; flex-direction:column; gap:6px;}
+  .dose-field{display:flex; flex-direction:column; gap:6px; min-width:0; max-width:100%;}
   .dose-field label{font-size:12.5px; color:var(--text-faint); font-family:var(--mono); letter-spacing:.02em;}
   .kg-input-row{display:flex; align-items:center; gap:8px;}
   .kg-input-row input{
@@ -140,7 +140,7 @@
   .dose-hint{font-size:12px; color:var(--text-faint); width:100%;}
 
   .scenario-select{
-    min-width:260px;
+    width:100%; max-width:100%; box-sizing:border-box;
     background:var(--panel); border:1px solid var(--border); color:var(--text);
     padding:9px 10px; border-radius:var(--radius-s); font-size:15px; font-family:var(--sans); cursor:pointer;
   }
@@ -352,7 +352,7 @@
   <div class="hero-inner">
     <div class="kicker"><span class="dot"></span>KLİNİK BESLENME REFERANSI</div>
     <h1>Enteral Ürünler</h1>
-    <p class="lede">100 ml başına içerik ve hasta kilosu/klinik senaryoya göre günlük ESPEN hedef karşılama analizi. Kiloyu girin, klinik senaryoyu seçin — her ürünün o hastada hangi hedefleri karşılayıp karşılamadığını görün.</p>
+    <p class="lede">100 ml başına içerik ve hasta kilosu/klinik senaryoya göre günlük ESPEN hedef karşılama analizi. Kiloyu girin, klinik senaryoyu seçin - her ürünün o hastada hangi hedefleri karşılayıp karşılamadığını görün.</p>
 
     <div class="dose-panel">
       <div class="dose-field">
@@ -507,7 +507,7 @@
       note: "Enerji hedefi 25–30 kcal/kg/gün, protein 1.3 g/kg/gün (kademeli olarak ulaşılır)."
     },
     "yb-travma": {
-      label: "YB — travma / majör cerrahi / açık karın",
+      label: "YB — travma / majör cerrahi / açık karın / yanık",
       kcalMin:25, kcalMax:30, kcalDef:27,
       proMin:1.5, proMax:2.0, proDef:1.75,
       note: "Yüksek nitrojen ve doku kaybı nedeniyle protein hedefi belirgin yüksektir (1.5–2.0 g/kg/gün)."
@@ -521,7 +521,7 @@
       label: "Kritik hasta + AKI (diyaliz almıyor)",
       kcalMin:20, kcalMax:25, kcalDef:22,
       proMin:1.0, proMax:1.3, proDef:1.15,
-      note: "Akut dönemde 20–25 kcal/kg/gün, tolere edildikçe 25–30 kcal/kg/gün'e çıkılabilir. Protein 1.0 g/kg ile başlanıp kademeli 1.3 g/kg'a çıkılır — KRT başlangıcını geciktirmek için protein ASLA kısıtlanmaz."
+      note: "Akut dönemde 20–25 kcal/kg/gün, tolere edildikçe 25–30 kcal/kg/gün'e çıkılabilir. Protein 1.0 g/kg ile başlanıp kademeli 1.3 g/kg'a çıkılır - KRT başlangıcını geciktirmek için protein ASLA kısıtlanmaz."
     },
     "renal-crrt": {
       label: "Kritik hasta + CRRT / SLED",
@@ -878,7 +878,15 @@
       const per100 = parseFloat(m[0]);
       const delivered = (per100/100) * dailyVolume;
       const target = spec.flat !== undefined ? spec.flat : spec.perKg * state.weight;
-      const status = spec.type === 'min' ? (delivered >= target ? 'ok' : 'low') : (delivered <= target ? 'ok' : 'high');
+      const ratio = delivered / target;
+      let status;
+      if(ratio >= 0.90){
+        status = 'ok';      // Yeşil (%90 ve %100 üzeri dahil)
+      } else if(ratio >= 0.70){
+        status = 'mid';     // Turuncu (%70 - %90 arası)
+      } else {
+        status = 'low';     // Kırmızı (%70 altı)
+      }
       results[row.bilesen] = {delivered, target, status, note: spec.note, type: spec.type};
       total++;
       if(status === 'ok') ok++;
@@ -895,9 +903,13 @@
         const target = state.targetProteinPerDay;
         const ratio = delivered / target;
         let tier;
-        if(ratio >= 1) tier = 'ok';
-        else if(ratio >= 0.8) tier = 'mid';
-        else tier = 'low';
+        if(ratio >= 0.90){
+          tier = 'ok';       // %90 ve üstü (yeşil)
+        } else if(ratio >= 0.70){
+          tier = 'mid';      // %70 - %90 arası (turuncu)
+        } else {
+          tier = 'low';      // %70 altı (kırmızı)
+        }
         protein = {delivered, target, ratio, tier, sourceNote: state.proteinSourceNote};
         results['Protein'] = {delivered, target, status: tier, note: state.proteinSourceNote, type:'min', tier};
         total++;
