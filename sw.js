@@ -1,7 +1,8 @@
-const CACHE_NAME = 'enteral-urunler-v1';
+const CACHE_NAME = 'enteral-urunler-v2';
 const ASSETS = [
   './',
   './index.html',
+  './data.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
