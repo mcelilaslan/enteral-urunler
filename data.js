@@ -4,6 +4,7 @@
 // { "isim", "uretici", "veriler": [...], "endikasyon", "hedefKitle", "form",
 //   "diyabetik", "renal", "immun", "kcal100", "protein100", "lif100",
 //   "osmolarite", "lifVar" } alanlarını içeren yeni bir obje eklemek yeterli.
+// İsteğe bağlı: "uyari" (kısa klinik not, kartta gösterilir).
 // Bu dosya index.html tarafından <script src="data.js"></script> ile
 // çağrılır; index.html'in kendisine dokunmaya gerek kalmaz.
 
@@ -3318,7 +3319,8 @@ const PRODUCTS = [
   "form": "Tüp beslenme",
   "diyabetik": false,
   "renal": false,
-  "immun": true
+  "immun": true,
+  "uyari": "Glutamin içerir: ağır sepsis, şok ve çoklu organ yetmezliğinde önerilmez (REDOXS). ESPEN 2023: immünonütrisyon ürünleri YBÜ'de rutin önerilmez, bolus verilmemeli."
  },
  {
   "isim": "Impact Enteral",
@@ -3686,7 +3688,8 @@ const PRODUCTS = [
   "form": "Tüp beslenme",
   "diyabetik": false,
   "renal": false,
-  "immun": true
+  "immun": true,
+  "uyari": "ESPEN 2023: yüksek doz omega-3/immünonütrisyon ürünleri YBÜ'de (sepsis, medikal YBÜ dahil) rutin önerilmez; bolus verilmemeli."
  },
  {
   "isim": "Resource Protein",
@@ -7366,7 +7369,8 @@ const PRODUCTS = [
   "form": "Tüp beslenme",
   "diyabetik": false,
   "renal": false,
-  "immun": false
+  "immun": true,
+  "uyari": "EPA + GLA + antioksidan (immün formül). OMEGA-EN (2011) sonrası ARDS/sepsis/medikal YBÜ'de rutin kullanımı terk edildi; ESPEN 2023 rutin önermiyor, bolus verilmemeli."
  },
  {
   "isim": "Fresubin Energy",
