@@ -8618,6 +8618,336 @@ const PRODUCTS = [
   "lif100": 2.0,
   "osmolarite": 400.0,
   "lifVar": true
+ },
+ {
+  "isim": "Periolimel N4-600E",
+  "uretici": "Baxter",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "-",
+    "deger": "70.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "1.3 g/kg/gün (1.2 - 1.5; KRT/Obezitede 2.0'ye kadar)",
+    "deger": "2.53"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "Maks 1.5 g/kg/gün",
+    "deger": "3.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "Maks 5 mg/kg/dk infüzyon hızı",
+    "deger": "7.50"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sodyum (Na)",
+    "birim": "mg",
+    "hedef": "1500 - 3000 mg/gün (1 - 2 mmol/kg/gün)",
+    "deger": "48.3"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Potasyum (K)",
+    "birim": "mg",
+    "hedef": "2000 - 3500 mg/gün (1 - 1.5 mmol/kg/gün)",
+    "deger": "62.6"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Klor (Cl)",
+    "birim": "mg",
+    "hedef": "1 - 2 mmol/kg/gün (Na/K'ya paralel)",
+    "deger": "85.1"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "500 - 1000 mg/gün (10 - 15 mmol/gün)",
+    "deger": "8.0"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Fosfor (P)",
+    "birim": "mg",
+    "hedef": "700 - 1000 mg/gün (20 - 30 mmol/gün)",
+    "deger": "26.4"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Magnezyum (Mg)",
+    "birim": "mg",
+    "hedef": "250 - 400 mg/gün (10 - 15 mmol/gün)",
+    "deger": "5.3"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Asetat",
+    "birim": "mmol",
+    "hedef": "-",
+    "deger": "2.70"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "İzo-ozmolar (280-350) veya makul (<450-500)",
+    "deger": "760"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "pH",
+    "birim": "-",
+    "hedef": "-",
+    "deger": "6.4"
+   }
+  ],
+  "kcal": null,
+  "kcal100": 70.0,
+  "protein100": 2.53,
+  "lif100": 0.0,
+  "osmolarite": 760.0,
+  "lifVar": false,
+  "endikasyon": "Periferik ven yoluyla da verilebilen (izo-ozmolar/düşük ozmolarite), standart/orta kalorili 3'lü (glukoz+amino asit+lipid) parenteral beslenme torbası.",
+  "hedefKitle": "Erişkin",
+  "form": "Parenteral (IV) — 3 bölmeli infüzyon torbası",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false,
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
+ },
+ {
+  "isim": "Olimel N9-840",
+  "uretici": "Baxter",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "-",
+    "deger": "107.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "1.3 g/kg/gün (1.2 - 1.5; KRT/Obezitede 2.0'ye kadar)",
+    "deger": "5.69"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "Maks 1.5 g/kg/gün",
+    "deger": "4.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "Maks 5 mg/kg/dk infüzyon hızı",
+    "deger": "11.00"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sodyum (Na)",
+    "birim": "mg",
+    "hedef": "1500 - 3000 mg/gün (1 - 2 mmol/kg/gün)",
+    "deger": "-"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Potasyum (K)",
+    "birim": "mg",
+    "hedef": "2000 - 3500 mg/gün (1 - 1.5 mmol/kg/gün)",
+    "deger": "-"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Klor (Cl)",
+    "birim": "mg",
+    "hedef": "1 - 2 mmol/kg/gün (Na/K'ya paralel)",
+    "deger": "-"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "500 - 1000 mg/gün (10 - 15 mmol/gün)",
+    "deger": "-"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Fosfor (P)",
+    "birim": "mg",
+    "hedef": "700 - 1000 mg/gün (20 - 30 mmol/gün)",
+    "deger": "9.3"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Magnezyum (Mg)",
+    "birim": "mg",
+    "hedef": "250 - 400 mg/gün (10 - 15 mmol/gün)",
+    "deger": "-"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Asetat",
+    "birim": "mmol",
+    "hedef": "-",
+    "deger": "4.00"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "İzo-ozmolar (280-350) veya makul (<450-500)",
+    "deger": "1170"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "pH",
+    "birim": "-",
+    "hedef": "-",
+    "deger": "6.4"
+   }
+  ],
+  "kcal": null,
+  "kcal100": 107.0,
+  "protein100": 5.69,
+  "lif100": 0.0,
+  "osmolarite": 1170.0,
+  "lifVar": false,
+  "endikasyon": "Santral ven yoluyla verilen, elektrolitsiz (N9), yüksek azotlu 3'lü parenteral beslenme torbası — elektrolitler hasta ihtiyacına göre ayrıca eklenmelidir.",
+  "hedefKitle": "Erişkin",
+  "form": "Parenteral (IV) — 3 bölmeli infüzyon torbası",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false,
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir. Bu formülasyon elektrolit içermez (N9); Na/K/Mg/Ca ihtiyaca göre ayrıca eklenmelidir."
+ },
+ {
+  "isim": "Oliclinomel N7-1000E",
+  "uretici": "Baxter",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "-",
+    "deger": "120.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "1.3 g/kg/gün (1.2 - 1.5; KRT/Obezitede 2.0'ye kadar)",
+    "deger": "4.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "Maks 1.5 g/kg/gün",
+    "deger": "4.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "Maks 5 mg/kg/dk infüzyon hızı",
+    "deger": "16.00"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sodyum (Na)",
+    "birim": "mg",
+    "hedef": "1500 - 3000 mg/gün (1 - 2 mmol/kg/gün)",
+    "deger": "73.6"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Potasyum (K)",
+    "birim": "mg",
+    "hedef": "2000 - 3500 mg/gün (1 - 1.5 mmol/kg/gün)",
+    "deger": "93.8"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Klor (Cl)",
+    "birim": "mg",
+    "hedef": "1 - 2 mmol/kg/gün (Na/K'ya paralel)",
+    "deger": "170.2"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "500 - 1000 mg/gün (10 - 15 mmol/gün)",
+    "deger": "12.0"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Fosfor (P)",
+    "birim": "mg",
+    "hedef": "700 - 1000 mg/gün (20 - 30 mmol/gün)",
+    "deger": "31.0"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Magnezyum (Mg)",
+    "birim": "mg",
+    "hedef": "250 - 400 mg/gün (10 - 15 mmol/gün)",
+    "deger": "5.3"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Asetat",
+    "birim": "mmol",
+    "hedef": "-",
+    "deger": "5.70"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "İzo-ozmolar (280-350) veya makul (<450-500)",
+    "deger": "1450"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "pH",
+    "birim": "-",
+    "hedef": "-",
+    "deger": "6"
+   }
+  ],
+  "kcal": null,
+  "kcal100": 120.0,
+  "protein100": 4.0,
+  "lif100": 0.0,
+  "osmolarite": 1450.0,
+  "lifVar": false,
+  "endikasyon": "Santral ven yoluyla verilen, elektrolitli, yüksek kalorili/azotlu 3'lü parenteral beslenme torbası.",
+  "hedefKitle": "Erişkin",
+  "form": "Parenteral (IV) — 3 bölmeli infüzyon torbası",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false,
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
  }
 ];
 
