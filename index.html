@@ -228,26 +228,18 @@
   .mfr{font-family:var(--mono); font-size:12px; letter-spacing:.03em; color:var(--text-faint);}
   .mfr b{color:var(--text-dim); font-weight:500;}
 
-  .brand-badge{
-    display:inline-flex; align-items:center; gap:7px; padding:5px 11px 5px 9px;
-    border-radius:99px; font-family:var(--sans); font-size:12.5px; font-weight:700;
-    letter-spacing:.015em; line-height:1; white-space:nowrap;
-    background:var(--bb-bg); color:var(--bb-fg); border:1px solid var(--bb-border);
+  .brand-logo{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:6px 11px; border-radius:10px; background:var(--bl-bg,#fff); border:1px solid var(--bl-border,#e7e5df);
+    line-height:0;
   }
-  .brand-badge::before{
-    content:''; width:7px; height:7px; border-radius:50%; flex:none; background:var(--bb-dot);
-  }
-  .brand-abbott{--bb-bg:#e8f1fb; --bb-fg:#0a3d78; --bb-border:#c5ddf4; --bb-dot:#0a66c2;}
-  .brand-nutricia{--bb-bg:#e3f6f3; --bb-fg:#0a5c53; --bb-border:#bfe9e2; --bb-dot:#0f9b89;}
-  .brand-nestle{--bb-bg:#f8ece9; --bb-fg:#7a2518; --bb-border:#efd2ca; --bb-dot:#a8381f;}
-  .brand-fresenius{--bb-bg:#eaf7ec; --bb-fg:#1d5c2c; --bb-border:#cbebd0; --bb-dot:#2f9e4a;}
-  .brand-baxter{--bb-bg:#eef0fb; --bb-fg:#2c2e7a; --bb-border:#d4d7f2; --bb-dot:#4850c4;}
-  .brand-default{--bb-bg:var(--panel-2,var(--panel)); --bb-fg:var(--text-dim); --bb-border:var(--border); --bb-dot:var(--text-faint);}
-  :root[data-theme="dark"] .brand-abbott{--bb-bg:#132742; --bb-fg:#9ec6f2; --bb-border:#1f3d61; --bb-dot:#5b9eea;}
-  :root[data-theme="dark"] .brand-nutricia{--bb-bg:#0f2c28; --bb-fg:#8fd9cb; --bb-border:#1b4640; --bb-dot:#3fc2ab;}
-  :root[data-theme="dark"] .brand-nestle{--bb-bg:#311e18; --bb-fg:#e7a893; --bb-border:#4a2e25; --bb-dot:#d4654a;}
-  :root[data-theme="dark"] .brand-fresenius{--bb-bg:#122e1a; --bb-fg:#9bdaa9; --bb-border:#1e4a2a; --bb-dot:#4cc96b;}
-  :root[data-theme="dark"] .brand-baxter{--bb-bg:#1c1f47; --bb-fg:#b4b8ef; --bb-border:#2c2f6b; --bb-dot:#7b82e8;}
+  .brand-logo img{display:block; height:15px; width:auto;}
+  .brand-logo.brand-abbott{--bl-bg:#061a33; --bl-border:#061a33;}
+  .brand-logo.brand-abbott img{height:13px;}
+  .brand-logo.brand-nutricia img{height:19px;}
+  .brand-logo.brand-fresenius img{height:12px;}
+  .brand-logo.brand-baxter img{height:12px;}
+  .brand-logo.brand-nestle img{height:17px;}
   .tag{font-size:11.5px; font-family:var(--mono); padding:2px 7px; border-radius:99px; white-space:nowrap;}
   .tag-diab{color:var(--amber); background:var(--amber-soft);}
   .tag-immun{color:var(--coral); background:var(--coral-soft);}
@@ -919,7 +911,7 @@
     head.className = 'card-head';
     head.innerHTML = `
       <div class="mfr-row">
-        <span class="brand-badge brand-${brandSlug(p.uretici)}">${p.uretici}</span>
+        ${BRAND_SLUGS[p.uretici] ? `<span class="brand-logo brand-${brandSlug(p.uretici)}"><img src="logos/${brandSlug(p.uretici)}.svg" alt="${p.uretici}" loading="lazy"></span>` : `<span class="mfr"><b>${p.uretici}</b></span>`}
         <span style="display:flex; gap:6px; flex-wrap:wrap;">${tags.join('')}</span>
       </div>
       <h2>${p.isim}</h2>

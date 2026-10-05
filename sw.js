@@ -1,4 +1,4 @@
-const CACHE_NAME = 'enteral-urunler-v2';
+const CACHE_NAME = 'enteral-urunler-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,12 @@ const ASSETS = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './icon-180.png'
+  './icon-180.png',
+  './logos/abbott.svg',
+  './logos/nutricia.svg',
+  './logos/nestle.svg',
+  './logos/fresenius.svg',
+  './logos/baxter.svg'
 ];
 
 self.addEventListener('install', (event) => {
