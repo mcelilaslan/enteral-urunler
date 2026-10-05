@@ -421,7 +421,7 @@
       </div>
     </div>
     <div class="controls-row2" style="margin-top:8px;">
-      <span class="result-count"><b id="resultCount">20</b> / 20 ürün gösteriliyor</span>
+      <span class="result-count"><b id="resultCount">20</b> / <b id="totalCount">20</b> ürün gösteriliyor</span>
     </div>
   </div>
 </div>
@@ -1012,6 +1012,7 @@
     const main = document.getElementById('main');
     main.innerHTML = '';
     document.getElementById('resultCount').textContent = list.length;
+    document.getElementById('totalCount').textContent = DATA.length;
 
     if(!list.length){
       const empty = document.createElement('div');
