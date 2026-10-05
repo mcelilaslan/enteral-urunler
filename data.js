@@ -8727,7 +8727,8 @@ const PRODUCTS = [
   "diyabetik": false,
   "renal": false,
   "immun": false,
-  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir.",
+  "parenteral": true
  },
  {
   "isim": "Olimel N9-840",
@@ -8837,7 +8838,8 @@ const PRODUCTS = [
   "diyabetik": false,
   "renal": false,
   "immun": false,
-  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir. Bu formülasyon elektrolit içermez (N9); Na/K/Mg/Ca ihtiyaca göre ayrıca eklenmelidir."
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir. Bu formülasyon elektrolit içermez (N9); Na/K/Mg/Ca ihtiyaca göre ayrıca eklenmelidir.",
+  "parenteral": true
  },
  {
   "isim": "Oliclinomel N7-1000E",
@@ -8947,7 +8949,8 @@ const PRODUCTS = [
   "diyabetik": false,
   "renal": false,
   "immun": false,
-  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir.",
+  "parenteral": true
  }
 ];
 
