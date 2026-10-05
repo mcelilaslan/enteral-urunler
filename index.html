@@ -189,6 +189,10 @@
   }
   select:focus{outline:2px solid var(--accent-dim); outline-offset:0;}
 
+  .sort-box{position:relative; display:flex; align-items:center;}
+  .sort-box svg{position:absolute; left:11px; width:15px; height:15px; color:var(--text-faint); pointer-events:none;}
+  .sort-box select{padding-left:33px;}
+
   .theme-toggle{
     display:inline-flex; align-items:center; justify-content:center;
     width:38px; height:38px; flex:none; border-radius:var(--radius-m);
@@ -223,6 +227,27 @@
   .card-head .mfr-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;}
   .mfr{font-family:var(--mono); font-size:12px; letter-spacing:.03em; color:var(--text-faint);}
   .mfr b{color:var(--text-dim); font-weight:500;}
+
+  .brand-badge{
+    display:inline-flex; align-items:center; gap:7px; padding:5px 11px 5px 9px;
+    border-radius:99px; font-family:var(--sans); font-size:12.5px; font-weight:700;
+    letter-spacing:.015em; line-height:1; white-space:nowrap;
+    background:var(--bb-bg); color:var(--bb-fg); border:1px solid var(--bb-border);
+  }
+  .brand-badge::before{
+    content:''; width:7px; height:7px; border-radius:50%; flex:none; background:var(--bb-dot);
+  }
+  .brand-abbott{--bb-bg:#e8f1fb; --bb-fg:#0a3d78; --bb-border:#c5ddf4; --bb-dot:#0a66c2;}
+  .brand-nutricia{--bb-bg:#e3f6f3; --bb-fg:#0a5c53; --bb-border:#bfe9e2; --bb-dot:#0f9b89;}
+  .brand-nestle{--bb-bg:#f8ece9; --bb-fg:#7a2518; --bb-border:#efd2ca; --bb-dot:#a8381f;}
+  .brand-fresenius{--bb-bg:#eaf7ec; --bb-fg:#1d5c2c; --bb-border:#cbebd0; --bb-dot:#2f9e4a;}
+  .brand-baxter{--bb-bg:#eef0fb; --bb-fg:#2c2e7a; --bb-border:#d4d7f2; --bb-dot:#4850c4;}
+  .brand-default{--bb-bg:var(--panel-2,var(--panel)); --bb-fg:var(--text-dim); --bb-border:var(--border); --bb-dot:var(--text-faint);}
+  :root[data-theme="dark"] .brand-abbott{--bb-bg:#132742; --bb-fg:#9ec6f2; --bb-border:#1f3d61; --bb-dot:#5b9eea;}
+  :root[data-theme="dark"] .brand-nutricia{--bb-bg:#0f2c28; --bb-fg:#8fd9cb; --bb-border:#1b4640; --bb-dot:#3fc2ab;}
+  :root[data-theme="dark"] .brand-nestle{--bb-bg:#311e18; --bb-fg:#e7a893; --bb-border:#4a2e25; --bb-dot:#d4654a;}
+  :root[data-theme="dark"] .brand-fresenius{--bb-bg:#122e1a; --bb-fg:#9bdaa9; --bb-border:#1e4a2a; --bb-dot:#4cc96b;}
+  :root[data-theme="dark"] .brand-baxter{--bb-bg:#1c1f47; --bb-fg:#b4b8ef; --bb-border:#2c2f6b; --bb-dot:#7b82e8;}
   .tag{font-size:11.5px; font-family:var(--mono); padding:2px 7px; border-radius:99px; white-space:nowrap;}
   .tag-diab{color:var(--amber); background:var(--amber-soft);}
   .tag-immun{color:var(--coral); background:var(--coral-soft);}
@@ -397,17 +422,20 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="searchInput" placeholder="Ürün ara… (örn. Nepro, Glucerna)">
       </div>
-      <select id="sortSelect">
-        <option value="proteinmatch-desc">Protein hedef karşılama oranına göre (çok → az)</option>
-        <option value="isim-asc">İsme göre (A–Z)</option>
-        <option value="kcal-desc">Kaloriye göre (yüksek → düşük)</option>
-        <option value="kcal-asc">Kaloriye göre (düşük → yüksek)</option>
-        <option value="protein-desc">Protein miktarına göre — g/100ml (yüksek → düşük)</option>
-        <option value="protein-asc">Protein miktarına göre — g/100ml (düşük → yüksek)</option>
-        <option value="lif-desc">Life göre (yüksek → düşük)</option>
-        <option value="osm-asc">Ozmolariteye göre (düşük → yüksek)</option>
-        <option value="osm-desc">Ozmolariteye göre (yüksek → düşük)</option>
-      </select>
+      <div class="sort-box" title="Sıralama ölçütü">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17V3"/><path d="M4 6l3-3 3 3"/><path d="M17 7v14"/><path d="M20 18l-3 3-3-3"/></svg>
+        <select id="sortSelect">
+          <option value="proteinmatch-desc">Protein hedef karşılama oranına göre (çok → az)</option>
+          <option value="isim-asc">İsme göre (A–Z)</option>
+          <option value="kcal-desc">Kaloriye göre (yüksek → düşük)</option>
+          <option value="kcal-asc">Kaloriye göre (düşük → yüksek)</option>
+          <option value="protein-desc">Protein miktarına göre — g/100ml (yüksek → düşük)</option>
+          <option value="protein-asc">Protein miktarına göre — g/100ml (düşük → yüksek)</option>
+          <option value="lif-desc">Life göre (yüksek → düşük)</option>
+          <option value="osm-asc">Ozmolariteye göre (düşük → yüksek)</option>
+          <option value="osm-desc">Ozmolariteye göre (yüksek → düşük)</option>
+        </select>
+      </div>
       <button class="theme-toggle" id="themeToggle" title="Gece modu">🌙</button>
       <button class="install-btn" id="installBtn">⭳ Uygulamayı yükle</button>
     </div>
@@ -865,6 +893,17 @@
     return p.veriler.filter(e => e.kategori === kategori);
   }
 
+  const BRAND_SLUGS = {
+    'Abbott': 'abbott',
+    'Nutricia': 'nutricia',
+    'Nestlé Health Science': 'nestle',
+    'Fresenius Kabi': 'fresenius',
+    'Baxter': 'baxter'
+  };
+  function brandSlug(uretici){
+    return BRAND_SLUGS[uretici] || 'default';
+  }
+
   function renderCard(p, dose){
     const ppk = proteinPer100kcal(p);
     const el = document.createElement('article');
@@ -880,7 +919,7 @@
     head.className = 'card-head';
     head.innerHTML = `
       <div class="mfr-row">
-        <span class="mfr"><b>${p.uretici}</b></span>
+        <span class="brand-badge brand-${brandSlug(p.uretici)}">${p.uretici}</span>
         <span style="display:flex; gap:6px; flex-wrap:wrap;">${tags.join('')}</span>
       </div>
       <h2>${p.isim}</h2>
