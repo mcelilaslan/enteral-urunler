@@ -9062,6 +9062,117 @@ const PRODUCTS = [
   "immun": false,
   "parenteral": true,
   "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
+ },
+ {
+  "isim": "Kabiven Peripheral",
+  "uretici": "Fresenius Kabi",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "-",
+    "deger": "69.44"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "1.3 g/kg/gün (1.2 - 1.5; KRT/Obezitede 2.0'ye kadar)",
+    "deger": "2.36"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "Maks 1.5 g/kg/gün",
+    "deger": "3.54"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "Maks 5 mg/kg/dk infüzyon hızı",
+    "deger": "6.74"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sodyum (Na)",
+    "birim": "mg",
+    "hedef": "1500 - 3000 mg/gün (1 - 2 mmol/kg/gün)",
+    "deger": "51.1"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Potasyum (K)",
+    "birim": "mg",
+    "hedef": "2000 - 3500 mg/gün (1 - 1.5 mmol/kg/gün)",
+    "deger": "65.2"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Klor (Cl)",
+    "birim": "mg",
+    "hedef": "1 - 2 mmol/kg/gün (Na/K'ya paralel)",
+    "deger": "115.7"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "500 - 1000 mg/gün (10 - 15 mmol/gün)",
+    "deger": "5.6"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Fosfor (P)",
+    "birim": "mg",
+    "hedef": "700 - 1000 mg/gün (20 - 30 mmol/gün)",
+    "deger": "23.7"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Magnezyum (Mg)",
+    "birim": "mg",
+    "hedef": "250 - 400 mg/gün (10 - 15 mmol/gün)",
+    "deger": "6.8"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Asetat",
+    "birim": "mmol",
+    "hedef": "-",
+    "deger": "2.71"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "İzo-ozmolar (280-350) veya makul (<450-500)",
+    "deger": "750"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "pH",
+    "birim": "-",
+    "hedef": "-",
+    "deger": "5.6"
+   }
+  ],
+  "kcal": null,
+  "kcal100": 69.44,
+  "protein100": 2.36,
+  "lif100": 0.0,
+  "osmolarite": 750.0,
+  "lifVar": false,
+  "endikasyon": "Periferik ven yoluyla verilebilen (düşük ozmolarite, ≈750 mOsm/l), standart kalorili 3'lü (glukoz+amino asit+lipid) parenteral beslenme torbası — Kabiven'in periferik versiyonu.",
+  "hedefKitle": "Erişkin",
+  "form": "Parenteral (IV) — 3 bölmeli infüzyon torbası",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false,
+  "parenteral": true,
+  "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
  }
 ];
 
