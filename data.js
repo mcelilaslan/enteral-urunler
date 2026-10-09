@@ -9173,6 +9173,353 @@ const PRODUCTS = [
   "immun": false,
   "parenteral": true,
   "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir."
+ },
+ {
+  "isim": "Nutrison Advanced Peptisorb",
+  "uretici": "Nutricia",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "6276 kJ",
+    "deger": "100"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kJ",
+    "hedef": "6276 kJ",
+    "deger": "425"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "1.3 g/kg/gün (1.2 - 1.5; KRT/Obezitede 2.0'ye kadar)",
+    "deger": "4.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "Maks 1.5 g/kg/gün",
+    "deger": "1.70"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Doymuş Yağ",
+    "birim": "g",
+    "hedef": "-",
+    "deger": "1.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "MCT (Orta Zincirli Trigliserid)",
+    "birim": "g",
+    "hedef": "-",
+    "deger": "0.80"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Tekli Doymamış Yağ",
+    "birim": "g",
+    "hedef": "-",
+    "deger": "0.20"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Çoklu Doymamış Yağ",
+    "birim": "g",
+    "hedef": "-",
+    "deger": "0.50"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "Maks 5 mg/kg/dk infüzyon hızı",
+    "deger": "17.60"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Şekerler",
+    "birim": "g",
+    "hedef": "-",
+    "deger": "1.70"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Laktoz",
+    "birim": "g",
+    "hedef": "-",
+    "deger": "0.10"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Lif / FOS",
+    "birim": "g",
+    "hedef": "10 - 20 g/gün (iskemi/şokta kontrendike)",
+    "deger": "0.00"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Tuz (NaCl)",
+    "birim": "g",
+    "hedef": "4 - 6 g/gün",
+    "deger": "0.25"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin A",
+    "birim": "mcg RE",
+    "hedef": "900 - 1500",
+    "deger": "82"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin D3",
+    "birim": "mcg",
+    "hedef": "En az 25 mcg (1000 IU)",
+    "deger": "0.70"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin E",
+    "birim": "mg a-TE",
+    "hedef": "En az 15",
+    "deger": "1.3"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin K1",
+    "birim": "mcg",
+    "hedef": "En az 120",
+    "deger": "5.3"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin C",
+    "birim": "mg",
+    "hedef": "En az 100",
+    "deger": "10"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Folik Asit",
+    "birim": "mcg",
+    "hedef": "330 - 400 DFE",
+    "deger": "27"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin B1 (Tiamin)",
+    "birim": "mg",
+    "hedef": "1.5 - 3.0",
+    "deger": "0.15"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin B2 (Riboflavin)",
+    "birim": "mg",
+    "hedef": "En az 1.2",
+    "deger": "0.16"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin B6 (Piridoksin)",
+    "birim": "mg",
+    "hedef": "En az 1.5",
+    "deger": "0.17"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Vitamin B12",
+    "birim": "mcg",
+    "hedef": "En az 2.5",
+    "deger": "0.21"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Niasin",
+    "birim": "mg NE",
+    "hedef": "18 - 40",
+    "deger": "1.8"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Pantotenik Asit",
+    "birim": "mg",
+    "hedef": "En az 5.0",
+    "deger": "0.53"
+   },
+   {
+    "kategori": "Vitamin",
+    "bilesen": "Biotin",
+    "birim": "mcg",
+    "hedef": "En az 30",
+    "deger": "4.0"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sodyum (Na)",
+    "birim": "mg",
+    "hedef": "1500 - 3000 mg/gün (1 - 2 mmol/kg/gün)",
+    "deger": "100"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Potasyum (K)",
+    "birim": "mg",
+    "hedef": "2000 - 3500 mg/gün (1 - 1.5 mmol/kg/gün)",
+    "deger": "150"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Klor (Cl)",
+    "birim": "mg",
+    "hedef": "1 - 2 mmol/kg/gün (Na/K'ya paralel)",
+    "deger": "125"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "500 - 1000 mg/gün (10 - 15 mmol/gün)",
+    "deger": "80"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Fosfor (P)",
+    "birim": "mg",
+    "hedef": "700 - 1000 mg/gün (20 - 30 mmol/gün)",
+    "deger": "72"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Magnezyum (Mg)",
+    "birim": "mg",
+    "hedef": "250 - 400 mg/gün (10 - 15 mmol/gün)",
+    "deger": "23"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Demir (Fe)",
+    "birim": "mg",
+    "hedef": "18 - 30",
+    "deger": "1.6"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Çinko (Zn)",
+    "birim": "mg",
+    "hedef": "10 - 20",
+    "deger": "1.2"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Manganez (Mn)",
+    "birim": "mg",
+    "hedef": "2 - 3 (maks 6)",
+    "deger": "0.33"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Bakır (Cu)",
+    "birim": "mcg",
+    "hedef": "1000 - 3000",
+    "deger": "180"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "İyot (I)",
+    "birim": "mcg",
+    "hedef": "150 - 300",
+    "deger": "13"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Selenyum (Se)",
+    "birim": "mcg",
+    "hedef": "50 - 150",
+    "deger": "5.7"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Krom (Cr)",
+    "birim": "mcg",
+    "hedef": "35 - 150",
+    "deger": "6.7"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Molibden (Mo)",
+    "birim": "mcg",
+    "hedef": "50 - 250",
+    "deger": "10"
+   },
+   {
+    "kategori": "Eser Element",
+    "bilesen": "Florür (F)",
+    "birim": "mg",
+    "hedef": "0 - 3",
+    "deger": "0.10"
+   },
+   {
+    "kategori": "Özel",
+    "bilesen": "Kolin",
+    "birim": "mg",
+    "hedef": "400 - 550 mg/gün (Adequate Intake - AI)",
+    "deger": "37"
+   },
+   {
+    "kategori": "Özel",
+    "bilesen": "Taurin",
+    "birim": "mg",
+    "hedef": "-",
+    "deger": "10"
+   },
+   {
+    "kategori": "Özel",
+    "bilesen": "Karotenoidler",
+    "birim": "mg",
+    "hedef": "-",
+    "deger": "0.20"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "İzo-ozmolar (280-350) veya makul (<450-500)",
+    "deger": "455"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolalite",
+    "birim": "mOsm/kg su",
+    "hedef": "İzo-ozmolar (280-350)",
+    "deger": "535"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Renal Solüt Yükü",
+    "birim": "mOsm/l",
+    "hedef": "300 - 600",
+    "deger": "369"
+   }
+  ],
+  "kcal": null,
+  "kcal100": 100.0,
+  "protein100": 4.0,
+  "lif100": 0.0,
+  "osmolarite": 455.0,
+  "lifVar": false,
+  "endikasyon": "Peptid bazlı (hidrolize whey proteini), MCT ağırlıklı yağ profili; malabsorpsiyon, kısa barsak sendromu, pankreatik yetmezlik veya ciddi GİS intoleransında kullanılan lifsiz tüp beslenme formülü.",
+  "hedefKitle": "Erişkin",
+  "form": "Tüp beslenme",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false
  }
 ];
 
