@@ -11103,7 +11103,7 @@ const PRODUCTS = [
   "immun": false
  },
  {
-  "isim": "Nutriclin N9-840E",
+  "isim": "Olimel N9-840E",
   "uretici": "Baxter",
   "veriler": [
    {
