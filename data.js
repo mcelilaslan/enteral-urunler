@@ -9034,6 +9034,13 @@ const PRODUCTS = [
     "deger": "3.80"
    },
    {
+    "kategori": "Elektrolit",
+    "bilesen": "Sülfat",
+    "birim": "mmol",
+    "hedef": "-",
+    "deger": "0.39"
+   },
+   {
     "kategori": "Fizikokimya",
     "bilesen": "Osmolarite",
     "birim": "mOsm/l",
@@ -9143,6 +9150,13 @@ const PRODUCTS = [
     "birim": "mmol",
     "hedef": "-",
     "deger": "2.71"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sülfat",
+    "birim": "mmol",
+    "hedef": "-",
+    "deger": "0.28"
    },
    {
     "kategori": "Fizikokimya",
