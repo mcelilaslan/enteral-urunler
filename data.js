@@ -11212,6 +11212,146 @@ const PRODUCTS = [
   "immun": false,
   "uyari": "Parenteral (IV) çok bölmeli torbadır, enteral/oral kullanılmaz. TPN torbaları stabilite nedeniyle vitamin ve eser element içermez — Wernicke/refeeding riskini önlemek için (özellikle B1/tiamin) her gün ayrıca multivitamin ve multi-eser element eklenmelidir.",
   "parenteral": true
+ },
+ {
+  "isim": "Protifar",
+  "uretici": "Nutricia",
+  "kcal": null,
+  "kcal100": null,
+  "protein100": null,
+  "lif100": 0.0,
+  "osmolarite": 25.0,
+  "lifVar": false,
+  "modul": true,
+  "endikasyon": "Yüksek proteinli toz protein modülü; normal diyetle veya enteral formülle karşılanamayan artmış protein gereksiniminde destek olarak kullanılır. Tatlı ve tuzlu gıda/içeceklere eklenebilir.",
+  "hedefKitle": "3 yaş üstü",
+  "form": "Toz (225 g) — nötral tat",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false,
+  "per100g": {
+   "kcal": 368,
+   "protein": 87.2
+  },
+  "olcek": {
+   "g": 2.5,
+   "protein": 2.2
+  },
+  "uyari": "Sadece enteral kullanım içindir, parenteral uygun değildir. Tek başına beslenme kaynağı değildir. Galaktozemili hastalara uygun değildir.",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "",
+    "deger": "368"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "",
+    "deger": "87.2"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "",
+    "deger": "1.6"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Doymuş Yağ",
+    "birim": "g",
+    "hedef": "",
+    "deger": "1.2"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Tekli Doymamış Yağ",
+    "birim": "g",
+    "hedef": "",
+    "deger": "0.4"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "",
+    "deger": "1.2"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Şekerler",
+    "birim": "g",
+    "hedef": "",
+    "deger": "1.2"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Lif",
+    "birim": "g",
+    "hedef": "",
+    "deger": "0"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Sodyum (Na)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "110"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Potasyum (K)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "140"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Klor (Cl)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "80"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "1350"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Fosfor (P)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "700"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Magnezyum (Mg)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "≤20"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "",
+    "deger": "25"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolalite",
+    "birim": "mOsm/kgH2O",
+    "hedef": "",
+    "deger": "30"
+   }
+  ]
  }
 ];
 
