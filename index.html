@@ -377,6 +377,8 @@
   .stepper button{width:30px; height:30px; border-radius:50%; border:1px solid var(--violet); background:var(--panel); color:var(--violet); font:700 16px var(--sans); cursor:pointer; line-height:1;}
   .modul-info{margin-top:6px; font-size:11.5px; color:var(--text-dim); display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
   .modul-fill{padding:4px 9px; border-radius:99px; border:1px solid var(--violet); background:var(--panel); color:var(--violet); font:600 11.5px var(--sans); cursor:pointer;}
+  .modul-open{margin-top:8px; padding:6px 11px; border-radius:99px; border:1px dashed var(--violet); background:transparent; color:var(--violet); font:600 12px var(--sans); cursor:pointer;}
+  .stepper .modul-x{width:24px; height:24px; border:0; background:transparent; color:var(--text-faint); font-size:18px;}
   .tpn-strip{margin-top:8px; padding:7px 10px; border-radius:var(--radius-s); background:var(--amber-soft); color:var(--amber); font-size:12px; line-height:1.4;}
   .tag-modul{background:var(--violet-soft); color:var(--violet);}
   .modul-nums{grid-template-columns:repeat(3,1fr);}
@@ -994,6 +996,7 @@
   }
 
   const scoops = {};
+  const modulOpen = new Set();
   try{ Object.assign(scoops, JSON.parse(localStorage.getItem('enteral_scoops') || '{}')); }catch(e){}
   const cmpSel = [];
   try{ (JSON.parse(localStorage.getItem('enteral_cmp') || '[]')).forEach(n => { if(DATA.some(x => x.isim===n) && cmpSel.length<2) cmpSel.push(n); }); }catch(e){}
@@ -1104,13 +1107,14 @@
         if(modul && !p.parenteral){
           const gap = pr.target - total;
           const need = gap > 0 ? Math.ceil(gap / modul.olcek.protein) : 0;
-          modulHtml = `
+          modulHtml = (n === 0 && !modulOpen.has(p.isim)) ? `<button type="button" class="modul-open" data-scoop="open" data-p="${encodeURIComponent(p.isim)}">+ Protein modülü ekle</button>` : `
           <div class="modul-row">
             <div class="modul-top"><span class="pr-label">+ ${modul.isim} (protein modülü)</span>
               <span class="stepper">
                 <button type="button" data-scoop="-1" data-p="${encodeURIComponent(p.isim)}" aria-label="Azalt">−</button>
                 <b>${n}</b><span class="su">ölçek/gün</span>
                 <button type="button" data-scoop="1" data-p="${encodeURIComponent(p.isim)}" aria-label="Artır">+</button>
+                <button type="button" class="modul-x" data-scoop="close" data-p="${encodeURIComponent(p.isim)}" aria-label="Kapat">×</button>
               </span>
             </div>
             <div class="modul-info">${n ? `+${fmtNum(extra,1)} g protein · ${fmtNum(n*modul.olcek.g,1)} g toz · +${fmtNum(n*modul.per100g.kcal*modul.olcek.g/100,1)} kcal` : `1 ölçek (${fmtNum(modul.olcek.g)} g) = ${fmtNum(modul.olcek.protein)} g protein`}
@@ -1272,7 +1276,9 @@
     const p = DATA.find(x => x.isim === name);
     if(!p) return;
     const cur = scoops[name] || 0;
-    const nv = b.dataset.scoop === 'set' ? +b.dataset.n : Math.max(0, Math.min(60, cur + (+b.dataset.scoop)));
+    if(b.dataset.scoop === 'open') modulOpen.add(name);
+    if(b.dataset.scoop === 'close') modulOpen.delete(name);
+    const nv = b.dataset.scoop === 'close' ? 0 : b.dataset.scoop === 'open' ? cur : b.dataset.scoop === 'set' ? +b.dataset.n : Math.max(0, Math.min(60, cur + (+b.dataset.scoop)));
     if(nv) scoops[name] = nv; else delete scoops[name];
     try{ localStorage.setItem('enteral_scoops', JSON.stringify(scoops)); }catch(err){}
     const card = b.closest('.card');
