@@ -369,6 +369,15 @@
   @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
 
   /* ---------- 2'li karşılaştırma ---------- */
+  .modul-row{margin-top:8px; padding:8px 10px; border:1px dashed var(--violet); border-radius:var(--radius-m); background:var(--violet-soft);}
+  .modul-top{display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+  .stepper{display:inline-flex; align-items:center; gap:8px; font-size:12.5px;}
+  .stepper b{font-family:var(--mono); min-width:18px; text-align:center;}
+  .stepper .su{color:var(--text-faint); font-size:11px;}
+  .stepper button{width:30px; height:30px; border-radius:50%; border:1px solid var(--violet); background:var(--panel); color:var(--violet); font:700 16px var(--sans); cursor:pointer; line-height:1;}
+  .modul-info{margin-top:6px; font-size:11.5px; color:var(--text-dim); display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+  .modul-fill{padding:4px 9px; border-radius:99px; border:1px solid var(--violet); background:var(--panel); color:var(--violet); font:600 11.5px var(--sans); cursor:pointer;}
+  .tpn-strip{margin-top:8px; padding:7px 10px; border-radius:var(--radius-s); background:var(--amber-soft); color:var(--amber); font-size:12px; line-height:1.4;}
   .tag-modul{background:var(--violet-soft); color:var(--violet);}
   .modul-nums{grid-template-columns:repeat(3,1fr);}
   .cmp-btn{
@@ -984,7 +993,10 @@
     return BRAND_SLUGS[uretici] || 'default';
   }
 
+  const scoops = {};
+  try{ Object.assign(scoops, JSON.parse(localStorage.getItem('enteral_scoops') || '{}')); }catch(e){}
   const cmpSel = [];
+  try{ (JSON.parse(localStorage.getItem('enteral_cmp') || '[]')).forEach(n => { if(DATA.some(x => x.isim===n) && cmpSel.length<2) cmpSel.push(n); }); }catch(e){}
 
   function renderModulBody(el, p){
     const hn = document.createElement('div');
@@ -1069,29 +1081,70 @@
     if(dose){
       const strip = document.createElement('div');
       strip.className = 'dose-strip';
-      const perHour = dose.dailyVolume / 24;
-      const volWarn = dose.dailyVolume > 2500 ? `<div class="vol-warn">⚠ Günlük ${Math.round(dose.dailyVolume)} ml — pratikte uygulanması güç olabilir</div>` : '';
-
       let proteinRowHtml = '';
+      let modulHtml = '';
+      let clinicalWarning = dose.clinicalWarning;
+      const modul = DATA.find(x => x.modul);
       if(dose.protein){
         const pr = dose.protein;
-        const prPillClass = pr.tier === 'ok' ? 'good' : (pr.tier === 'mid' ? 'mid' : 'bad');
-        const prPct = Math.round(pr.ratio*100);
+        const n = (modul && !p.parenteral) ? (scoops[p.isim] || 0) : 0;
+        const extra = n * (modul ? modul.olcek.protein : 0);
+        const total = pr.delivered + extra;
+        const ratio = total / pr.target;
+        const tier = ratio >= 0.90 ? 'ok' : (ratio >= 0.70 ? 'mid' : 'low');
+        if(n > 0 && tier === 'ok') clinicalWarning = null;
+        const prPillClass = tier === 'ok' ? 'good' : (tier === 'mid' ? 'mid' : 'bad');
         proteinRowHtml = `
           <div class="protein-row">
-            <span class="pr-label">Protein hedefi</span>
-            <span class="score-pill ${prPillClass}" style="font-size:12.5px; padding:3px 10px;">%${prPct}</span>
-            <span class="pr-num">${fmtNum(pr.delivered,1)} / ${fmtNum(pr.target,1)} g/gün</span>
+            <span class="pr-label">Protein hedefi${n ? ' <small>(+modül)</small>' : ''}</span>
+            <span class="score-pill ${prPillClass}" style="font-size:12.5px; padding:3px 10px;">%${Math.round(ratio*100)}</span>
+            <span class="pr-num">${fmtNum(total,1)} / ${fmtNum(pr.target,1)} g/gün</span>
           </div>
         `;
+        if(modul && !p.parenteral){
+          const gap = pr.target - total;
+          const need = gap > 0 ? Math.ceil(gap / modul.olcek.protein) : 0;
+          modulHtml = `
+          <div class="modul-row">
+            <div class="modul-top"><span class="pr-label">+ ${modul.isim} (protein modülü)</span>
+              <span class="stepper">
+                <button type="button" data-scoop="-1" data-p="${encodeURIComponent(p.isim)}" aria-label="Azalt">−</button>
+                <b>${n}</b><span class="su">ölçek/gün</span>
+                <button type="button" data-scoop="1" data-p="${encodeURIComponent(p.isim)}" aria-label="Artır">+</button>
+              </span>
+            </div>
+            <div class="modul-info">${n ? `+${fmtNum(extra,1)} g protein · ${fmtNum(n*modul.olcek.g,1)} g toz · +${fmtNum(n*modul.per100g.kcal*modul.olcek.g/100,1)} kcal` : `1 ölçek (${fmtNum(modul.olcek.g)} g) = ${fmtNum(modul.olcek.protein)} g protein`}
+              ${need > 0 ? ` <button type="button" class="modul-fill" data-scoop="set" data-n="${(n+need)}" data-p="${encodeURIComponent(p.isim)}">%100 için ${n+need} ölçek</button>` : ''}</div>
+          </div>`;
+        }
       }
-      const warnHtml = dose.clinicalWarning ? `<div class="clinical-warn">⚠ ${dose.clinicalWarning}</div>` : '';
+      const warnHtml = clinicalWarning ? `<div class="clinical-warn">⚠ ${clinicalWarning}</div>` : '';
+
+      let extraWarn = '';
+      if(p.parenteral){
+        extraWarn += `<div class="tpn-strip">💊 Günlük multivitamin + eser element ekleyin (özellikle B1/tiamin — refeeding/Wernicke riski). Torba bunları içermez.</div>`;
+      }
+      const kRow = p.veriler.find(r => /Potasyum/.test(r.bilesen) && r.deger && r.deger !== '-');
+      if(kRow && state.weight){
+        const mg100 = num(kRow.deger);
+        if(mg100){
+          const mmol = (mg100/100 * dose.dailyVolume) / 39.1;
+          const perKg = mmol / state.weight;
+          if(perKg > 2){
+            extraWarn += `<div class="clinical-warn">⚠ Potasyum: ${fmtNum(mmol,0)} mmol/gün (${fmtNum(perKg,1)} mmol/kg) — 2 mmol/kg üzeri; böbrek yetmezliği/hiperkalemide dikkat.</div>`;
+          }
+        }
+      }
+      const perHour = dose.dailyVolume / 24;
+      const volWarn = dose.dailyVolume > 2500 ? `<div class="vol-warn">⚠ Günlük ${Math.round(dose.dailyVolume)} ml — pratikte uygulanması güç olabilir</div>` : '';
 
       strip.innerHTML = `
         <div class="vol-row"><span>Gereken hacim</span><b>${fmtNum(perHour,1)} ml/saat <span class="per-hour">(${Math.round(dose.dailyVolume)} ml/gün)</span></b></div>
         ${proteinRowHtml}
+        ${modulHtml}
         ${volWarn}
         ${warnHtml}
+        ${extraWarn}
       `;
       el.appendChild(strip);
     }
@@ -1211,10 +1264,28 @@
     });
     document.getElementById('cmpGo').disabled = cmpSel.length < 2;
   }
+  function saveCmp(){ try{ localStorage.setItem('enteral_cmp', JSON.stringify(cmpSel)); }catch(e){} }
+  document.getElementById('main').addEventListener('click', e => {
+    const b = e.target.closest('[data-scoop]');
+    if(!b) return;
+    const name = decodeURIComponent(b.dataset.p);
+    const p = DATA.find(x => x.isim === name);
+    if(!p) return;
+    const cur = scoops[name] || 0;
+    const nv = b.dataset.scoop === 'set' ? +b.dataset.n : Math.max(0, Math.min(60, cur + (+b.dataset.scoop)));
+    if(nv) scoops[name] = nv; else delete scoops[name];
+    try{ localStorage.setItem('enteral_scoops', JSON.stringify(scoops)); }catch(err){}
+    const card = b.closest('.card');
+    const open = Array.from(card.querySelectorAll('details.cat')).map(d => d.open);
+    const fresh = renderCard(p, computeDose(p));
+    fresh.querySelectorAll('details.cat').forEach((d,i) => { d.open = !!open[i]; });
+    card.replaceWith(fresh);
+  });
   function toggleCmp(name){
     const i = cmpSel.indexOf(name);
     if(i >= 0) cmpSel.splice(i,1);
     else { if(cmpSel.length >= 2) cmpSel.shift(); cmpSel.push(name); }
+    saveCmp();
     render();
   }
   document.getElementById('main').addEventListener('click', e => {
@@ -1223,7 +1294,7 @@
   });
   cmpBar.addEventListener('click', e => {
     const r = e.target.closest('[data-cmp-rm]');
-    if(r){ cmpSel.splice(+r.dataset.cmpRm,1); render(); }
+    if(r){ cmpSel.splice(+r.dataset.cmpRm,1); saveCmp(); render(); }
   });
 
   function openCmp(){
