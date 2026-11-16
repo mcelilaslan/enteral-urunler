@@ -367,6 +367,56 @@
 
   :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
+
+  /* ---------- 2'li karşılaştırma ---------- */
+  .cmp-btn{
+    display:inline-flex; align-items:center; gap:5px; margin-left:auto;
+    padding:5px 10px; border-radius:999px; border:1px solid var(--border);
+    background:var(--panel); color:var(--text-dim); font:600 12px var(--sans); cursor:pointer;
+    min-height:30px;
+  }
+  .cmp-btn.on{background:var(--accent-soft); border-color:var(--accent-dim); color:var(--accent);}
+  .card.cmp-sel{outline:2px solid var(--accent-dim); outline-offset:-1px;}
+  .cmp-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:60; display:none;
+    align-items:center; gap:10px; padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:var(--bg-raised); border-top:1px solid var(--border); box-shadow:0 -6px 20px rgba(0,0,0,0.12);
+  }
+  .cmp-bar.show{display:flex;}
+  .cmp-slots{flex:1; display:flex; gap:6px; min-width:0;}
+  .cmp-slot{
+    flex:1; min-width:0; padding:6px 8px; border-radius:var(--radius-m); border:1px dashed var(--border);
+    font-size:11.5px; color:var(--text-faint); display:flex; align-items:center; gap:4px;
+  }
+  .cmp-slot.filled{border-style:solid; border-color:var(--accent-dim); color:var(--text); background:var(--accent-soft);}
+  .cmp-slot span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;}
+  .cmp-slot button{background:none; border:0; color:var(--text-dim); font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;}
+  .cmp-go{padding:10px 16px; border-radius:var(--radius-m); border:0; background:var(--accent); color:#fff; font:700 13px var(--sans); cursor:pointer;}
+  .cmp-go:disabled{opacity:.4; cursor:default;}
+  body.cmp-open-bar main{padding-bottom:84px;}
+  .cmp-modal{position:fixed; inset:0; z-index:80; display:none; background:var(--bg); flex-direction:column;}
+  .cmp-modal.show{display:flex;}
+  .cmp-top{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:calc(10px + env(safe-area-inset-top)) 14px 10px; border-bottom:1px solid var(--border); background:var(--bg-raised);
+  }
+  .cmp-top h3{margin:0; font:600 16px var(--serif);}
+  .cmp-close{border:1px solid var(--border); background:var(--panel); color:var(--text); border-radius:999px; padding:6px 12px; font:600 13px var(--sans); cursor:pointer;}
+  .cmp-scroll{flex:1; overflow:auto; -webkit-overflow-scrolling:touch; padding-bottom:env(safe-area-inset-bottom);}
+  .cmp-grid{display:grid; grid-template-columns:minmax(84px,0.8fr) 1fr 1fr; min-width:0;}
+  .cmp-grid > div{padding:8px 8px; border-bottom:1px solid var(--border-soft); font-size:12.5px; display:flex; flex-direction:column; justify-content:center; min-width:0; overflow-wrap:anywhere;}
+  .cmp-grid .lbl{color:var(--text-dim); font-size:11.5px;}
+  .cmp-grid .lbl small{color:var(--text-faint);}
+  .cmp-grid .val{font-family:var(--mono); font-weight:600; align-items:flex-end; text-align:right;}
+  .cmp-grid .val.best{color:var(--good);}
+  .cmp-grid .val small{font-weight:400; color:var(--text-faint); font-size:10.5px;}
+  .cmp-grid .val .st{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; background:var(--text-faint);}
+  .cmp-grid .val .st.ok{background:var(--good);} .cmp-grid .val .st.mid{background:var(--amber);} .cmp-grid .val .st.low{background:var(--bad);}
+  .cmp-grid .hd{position:sticky; top:0; z-index:2; background:var(--bg-raised); align-items:center; text-align:center; gap:6px; border-bottom:2px solid var(--border);}
+  .cmp-grid .hd b{font:600 13px var(--serif); line-height:1.25;}
+  .cmp-grid .sec{grid-column:1/-1; background:var(--panel-2); font:700 11px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:var(--accent); padding:7px 10px;}
+  .cmp-note{padding:10px 14px; font-size:11.5px; color:var(--text-faint);}
+  @media (min-width:760px){ .cmp-modal{inset:4vh 8vw; border-radius:12px; border:1px solid var(--border); box-shadow:0 20px 60px rgba(0,0,0,.35);} }
 </style>
 </head>
 <body>
@@ -464,6 +514,14 @@
 </footer>
 
 <script src="data.js"></script>
+<div class="cmp-bar" id="cmpBar">
+  <div class="cmp-slots"><div class="cmp-slot" id="cmpS0"></div><div class="cmp-slot" id="cmpS1"></div></div>
+  <button type="button" class="cmp-go" id="cmpGo" disabled>Karşılaştır</button>
+</div>
+<div class="cmp-modal" id="cmpModal" role="dialog" aria-modal="true" aria-label="Ürün karşılaştırma">
+  <div class="cmp-top"><h3>Karşılaştırma</h3><button type="button" class="cmp-close" id="cmpClose">Kapat ✕</button></div>
+  <div class="cmp-scroll" id="cmpBody"></div>
+</div>
 <script>
 (function(){
   const DATA = PRODUCTS;
@@ -905,10 +963,12 @@
     return BRAND_SLUGS[uretici] || 'default';
   }
 
+  const cmpSel = [];
+
   function renderCard(p, dose){
     const ppk = proteinPer100kcal(p);
     const el = document.createElement('article');
-    el.className = 'card';
+    el.className = 'card' + (cmpSel.includes(p.isim) ? ' cmp-sel' : '');
 
     const tags = [];
     if(p.parenteral) tags.push('<span class="tag tag-parenteral">Parenteral</span>');
@@ -923,6 +983,7 @@
       <div class="mfr-row">
         ${BRAND_SLUGS[p.uretici] ? `<span class="brand-logo brand-${brandSlug(p.uretici)}"><img src="logos/${brandSlug(p.uretici)}.svg" alt="${p.uretici}" loading="lazy"></span>` : `<span class="mfr"><b>${p.uretici}</b></span>`}
         <span style="display:flex; gap:6px; flex-wrap:wrap;">${tags.join('')}</span>
+        <button type="button" class="cmp-btn ${cmpSel.includes(p.isim)?'on':''}" data-cmp="${encodeURIComponent(p.isim)}" aria-pressed="${cmpSel.includes(p.isim)}">${cmpSel.includes(p.isim)?'✓ Seçildi':'⇄ Karşılaştır'}</button>
       </div>
       <h2>${p.isim}</h2>
       <p class="indication">${p.endikasyon || ''}</p>
@@ -1068,8 +1129,107 @@
     }
 
     const anyFilter = state.mfr.size || state.highProtein || state.hasFiber || state.diabetic || state.parenteral || state.query;
+    updateCmpBar();
     document.getElementById('clearBtn').style.display = anyFilter ? 'inline-flex' : 'none';
   }
+
+
+  // ---------- 2'li karşılaştırma ----------
+  const cmpBar = document.getElementById('cmpBar');
+  const cmpModal = document.getElementById('cmpModal');
+  const cmpBody = document.getElementById('cmpBody');
+  const cmpByName = n => DATA.find(x => x.isim === n);
+  function num(v){ const m = String(v||'').match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; }
+  function esc(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  function updateCmpBar(){
+    cmpBar.classList.toggle('show', cmpSel.length > 0);
+    document.body.classList.toggle('cmp-open-bar', cmpSel.length > 0);
+    [0,1].forEach(i => {
+      const el = document.getElementById('cmpS'+i);
+      if(cmpSel[i]){
+        el.className = 'cmp-slot filled';
+        el.innerHTML = '<span>'+esc(cmpSel[i])+'</span><button type="button" data-cmp-rm="'+i+'" aria-label="Kaldır">×</button>';
+      } else {
+        el.className = 'cmp-slot';
+        el.textContent = i === 0 ? '1. ürün seç' : '2. ürünü seç';
+      }
+    });
+    document.getElementById('cmpGo').disabled = cmpSel.length < 2;
+  }
+  function toggleCmp(name){
+    const i = cmpSel.indexOf(name);
+    if(i >= 0) cmpSel.splice(i,1);
+    else { if(cmpSel.length >= 2) cmpSel.shift(); cmpSel.push(name); }
+    render();
+  }
+  document.getElementById('main').addEventListener('click', e => {
+    const b = e.target.closest('[data-cmp]');
+    if(b) toggleCmp(decodeURIComponent(b.dataset.cmp));
+  });
+  cmpBar.addEventListener('click', e => {
+    const r = e.target.closest('[data-cmp-rm]');
+    if(r){ cmpSel.splice(+r.dataset.cmpRm,1); render(); }
+  });
+
+  function openCmp(){
+    if(cmpSel.length < 2) return;
+    const ps = cmpSel.map(cmpByName);
+    const ds = ps.map(computeDose);
+    let h = '<div class="cmp-grid"><div class="hd"></div>';
+    ps.forEach(p => {
+      h += '<div class="hd">'+(BRAND_SLUGS[p.uretici] ? '<span class="brand-logo brand-'+brandSlug(p.uretici)+'"><img src="logos/'+brandSlug(p.uretici)+'.svg" alt="'+esc(p.uretici)+'"></span>' : '<small>'+esc(p.uretici)+'</small>')+'<b>'+esc(p.isim)+'</b></div>';
+    });
+    const row = (label, vals, opts) => {
+      opts = opts || {};
+      const nums = vals.map(v => v.n);
+      let best = -1;
+      if(opts.best && nums[0] !== null && nums[1] !== null && nums[0] !== nums[1]) best = nums[0] > nums[1] ? 0 : 1;
+      if(opts.best === 'low' && best >= 0) best = 1 - best;
+      h += '<div class="lbl">'+label+'</div>';
+      vals.forEach((v,i) => { h += '<div class="val'+(best===i?' best':'')+'">'+v.html+'</div>'; });
+    };
+    h += '<div class="sec">Özet (100 ml)</div>';
+    row('Enerji <small>kcal</small>', ps.map(p => ({n:p.kcal100, html:fmtNum(p.kcal100)})), {best:'high'});
+    row('Protein <small>g</small>', ps.map(p => ({n:p.protein100, html:fmtNum(p.protein100)})), {best:'high'});
+    row('Protein <small>g/100 kcal</small>', ps.map(p => { const v = proteinPer100kcal(p); return {n:v, html:v===null?'—':fmtNum(v)}; }), {best:'high'});
+    row('Lif <small>g</small>', ps.map(p => ({n:p.lifVar?p.lif100:null, html:p.lifVar?fmtNum(p.lif100):'—'})));
+    row('Ozmolarite <small>mOsm/l</small>', ps.map(p => ({n:p.osmolarite, html:p.osmolarite?fmtNum(p.osmolarite,0):'—'})), {best:'low'});
+    if(ds[0] && ds[1]){
+      h += '<div class="sec">Günlük hedef ('+(state.weight||'')+' kg)</div>';
+      row('Gereken hacim', ds.map(d => ({n:d.dailyVolume, html:Math.round(d.dailyVolume)+' <small>ml/gün</small>'})), {best:'low'});
+      if(ds[0].protein || ds[1].protein){
+        row('Protein hedefi', ds.map(d => d.protein ? {n:d.protein.ratio, html:'<span><i class="st '+d.protein.tier+'"></i>%'+Math.round(d.protein.ratio*100)+'</span><small>'+fmtNum(d.protein.delivered,1)+' / '+fmtNum(d.protein.target,1)+' g</small>'} : {n:null, html:'—'}), {best:'high'});
+      }
+      row('Hedefi karşılanan', ds.map(d => ({n:d.total?d.ok/d.total:null, html:d.ok+' / '+d.total})), {best:'high'});
+    }
+    CAT_ORDER.forEach(cat => {
+      const names = [];
+      ps.forEach(p => catRows(p,cat).forEach(r => { if(r.deger && r.deger !== '-' && !names.some(n => n.b===r.bilesen)) names.push({b:r.bilesen, u:r.birim}); }));
+      if(!names.length) return;
+      h += '<div class="sec">'+esc(CAT_LABEL[cat])+'</div>';
+      names.forEach(nm => {
+        const vals = ps.map((p,i) => {
+          const r = p.veriler.find(x => x.bilesen===nm.b && x.deger && x.deger!=='-');
+          if(!r) return {n:null, html:'—'};
+          const res = ds[i] && ds[i].results[nm.b];
+          let extra = '';
+          if(res) extra = '<small>'+fmtNum(res.delivered,1)+' / '+fmtNum(res.target,1)+'</small>';
+          return {n:num(r.deger), html:(res?'<span><i class="st '+res.status+'"></i>'+esc(r.deger)+'</span>':esc(r.deger))+extra};
+        });
+        row(esc(nm.b)+(nm.u ? ' <small>('+esc(nm.u)+')</small>' : ''), vals);
+      });
+    });
+    h += '</div><div class="cmp-note">Değerler 100 ml başınadır. Kilo girildiğinde günlük karşılama (verilen / hedef) ve renkli durum noktaları gösterilir. Yeşil üstün değeri belirtir (enerji, protein: yüksek; ozmolarite, hacim: düşük).</div>';
+    cmpBody.innerHTML = h;
+    cmpBody.scrollTop = 0;
+    cmpModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCmp(){ cmpModal.classList.remove('show'); document.body.style.overflow = ''; }
+  document.getElementById('cmpGo').addEventListener('click', openCmp);
+  document.getElementById('cmpClose').addEventListener('click', closeCmp);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeCmp(); });
 
   render();
 
