@@ -141,6 +141,8 @@
     flex-wrap:wrap;
   }
   .dose-summary b{color:var(--accent); font-family:var(--mono); font-weight:600;}
+  .kcal-pick{display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;}
+  .kcal-sel{padding:4px 8px; font-size:14px; font-family:var(--mono); font-weight:600; color:var(--accent);}
   .dose-hint{font-size:12px; color:var(--text-faint); width:100%;}
 
   .scenario-select{
@@ -486,7 +488,7 @@
       <div class="scenario-extra-row" id="scenarioExtraRow"></div>
 
       <div class="dose-summary" id="doseSummary" style="display:none;">
-        <span>Enerji hedefi: <b id="dsKcal">–</b> kcal/gün</span>
+        <span class="kcal-pick">Enerji hedefi: <select id="kcalPerKgSelect" class="kcal-sel" aria-label="kcal/kg"><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option></select> kcal/kg = <b id="dsKcal">–</b> kcal/gün</span>
         <span>Protein hedefi: <b id="dsProtein">–</b> g/gün</span>
       </div>
       <div class="dose-hint" id="doseHint">Hedef karşılama renklerini (yeşil/kırmızı) görmek için hasta kilosunu girin ve bir klinik senaryo seçin. Kilo/senaryo girilmeden ürünler yalnızca 100 ml içerikleriyle gösterilir.</div>
@@ -569,6 +571,7 @@
     weight: null,
     scenario: "manuel",
     manualKcalPerKg: 25,
+    kcalPerKg: 25,
     manualProteinPerKg: 1.2,
     scenarioKcalPerKg: null,
     scenarioProteinPerKg: null,
@@ -605,6 +608,8 @@
 
   // ---- restore saved inputs ----
   try{
+    const savedKpk = parseFloat(localStorage.getItem('enteral_kcalperkg'));
+    if([25,30,35,40].includes(savedKpk)) state.kcalPerKg = savedKpk;
     const savedW = localStorage.getItem('enteral_weight');
     const savedScenario = localStorage.getItem('enteral_scenario');
     const savedManualK = localStorage.getItem('enteral_manual_kcalperkg');
@@ -634,6 +639,16 @@
     try{ if(state.weight) localStorage.setItem('enteral_weight', state.weight); else localStorage.removeItem('enteral_weight'); }catch(err){}
     recomputeTargets();
     renderScenarioExtra();
+    updateDoseUI();
+    render();
+  });
+
+  const kcalPerKgSelect = document.getElementById('kcalPerKgSelect');
+  kcalPerKgSelect.value = String(state.kcalPerKg);
+  kcalPerKgSelect.addEventListener('change', (e) => {
+    state.kcalPerKg = parseFloat(e.target.value);
+    try{ localStorage.setItem('enteral_kcalperkg', state.kcalPerKg); }catch(err){}
+    recomputeTargets();
     updateDoseUI();
     render();
   });
@@ -780,7 +795,7 @@
       return;
     }
 
-    state.targetKcalPerDay = sc.kcalDef * state.weight;
+    state.targetKcalPerDay = state.kcalPerKg * state.weight;
     let proDef = sc.proDef, proMin = sc.proMin, proMax = sc.proMax;
     if(sc.elderlyToggle && state.elderlyRisk){
       proDef = sc.elderlyProDef; proMin = sc.elderlyProMin; proMax = sc.elderlyProMax;
@@ -795,6 +810,9 @@
     if(state.weight && state.targetKcalPerDay){
       summary.style.display = 'flex';
       document.getElementById('dsKcal').textContent = Math.round(state.targetKcalPerDay);
+      const usesPick = state.scenario !== 'manuel' && SCENARIOS[state.scenario] && !SCENARIOS[state.scenario].isObese;
+      kcalPerKgSelect.style.display = usesPick ? '' : 'none';
+      document.getElementById('dsKcal').previousSibling.nodeValue = usesPick ? ' kcal/kg = ' : ' ';
       document.getElementById('dsProtein').textContent = fmtNum(state.targetProteinPerDay,1);
       hint.textContent = 'Yeşil: hedefte · Turuncu: hedefe yakın · Kırmızı: hedefin belirgin altında. (' + state.weight + ' kg, ' + (state.scenario==='manuel' ? 'manuel hedef' : SCENARIOS[state.scenario].label) + ')';
     } else {
