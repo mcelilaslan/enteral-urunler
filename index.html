@@ -409,6 +409,12 @@
   .cmp-slot button{background:none; border:0; color:var(--text-dim); font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;}
   .cmp-go{padding:10px 16px; border-radius:var(--radius-m); border:0; background:var(--accent); color:#fff; font:700 13px var(--sans); cursor:pointer;}
   @keyframes cmpGlow{0%,100%{box-shadow:0 0 0 0 rgba(31,143,120,0);}50%{box-shadow:0 0 0 5px rgba(31,143,120,0.28), 0 0 14px rgba(31,143,120,0.45);}}
+  @media (min-width:760px){
+    .cmp-bar{left:50%; right:auto; bottom:18px; transform:translateX(-50%); width:max-content; max-width:calc(100vw - 32px); padding:10px 12px; border:1px solid var(--border); border-radius:14px;}
+    .cmp-slots{flex:none;}
+    .cmp-slot{flex:none; width:200px; font-size:12.5px;}
+    body.cmp-open-bar main{padding-bottom:96px;}
+  }
   .cmp-go.glow{animation:cmpGlow 1.3s ease-in-out 2;}
   @media (prefers-reduced-motion:reduce){.cmp-go.glow{animation:none;}}
   .cmp-go:disabled{opacity:.4; cursor:default;}
