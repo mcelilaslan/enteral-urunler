@@ -870,7 +870,7 @@
   }
 
   function computeDose(p){
-    if(p.modul || !state.weight || !p.kcal100 || !state.targetKcalPerDay) return null;
+    if(p.modul || p.basit || !state.weight || !p.kcal100 || !state.targetKcalPerDay) return null;
     const targetKcal = state.targetKcalPerDay;
     const dailyVolume = (targetKcal / p.kcal100) * 100; // ml/day
 
@@ -1006,7 +1006,7 @@
     hn.className = 'headline-nums modul-nums';
     hn.innerHTML = `
       <div class="hn stat-protein"><div class="v">${fmtNum(p.per100g.protein)}</div><div class="u">g protein / 100 g</div></div>
-      <div class="hn stat-protein"><div class="v">${fmtNum(p.olcek.protein)}</div><div class="u">g protein / ölçek (${fmtNum(p.olcek.g)} g)</div></div>
+      <div class="hn stat-protein"><div class="v">${fmtNum(p.olcek.protein)}</div><div class="u">g protein / ${p.olcek.ad || 'ölçek'} (${fmtNum(p.olcek.g)} g)</div></div>
       <div class="hn stat-kcal"><div class="v">${fmtNum(p.per100g.kcal)}</div><div class="u">kcal / 100 g</div></div>
     `;
     el.appendChild(hn);
@@ -1044,14 +1044,14 @@
     if(p.renal) tags.push('<span class="tag tag-renal">Renal</span>');
     if(p.osmolarite && p.osmolarite > 400) tags.push(`<button type="button" class="tag tag-osm" data-osm="${fmtNum(p.osmolarite,0)}">Hiperosmolar ⓘ</button>`);
 
-    if(p.modul){ tags.length = 0; tags.push('<span class="tag tag-modul">Protein modülü</span>'); }
+    if(p.modul || p.basit){ tags.length = 0; tags.push(`<span class="tag tag-modul">${p.etiket || 'Protein modülü'}</span>`); }
     let head = document.createElement('div');
     head.className = 'card-head';
     head.innerHTML = `
       <div class="mfr-row">
         ${BRAND_SLUGS[p.uretici] ? `<span class="brand-logo brand-${brandSlug(p.uretici)}"><img src="logos/${brandSlug(p.uretici)}.svg" alt="${p.uretici}" loading="lazy"></span>` : `<span class="mfr"><b>${p.uretici}</b></span>`}
         <span style="display:flex; gap:6px; flex-wrap:wrap;">${tags.join('')}</span>
-        ${p.modul ? '' : `<button type="button" class="cmp-btn ${cmpSel.includes(p.isim)?'on':''}" data-cmp="${encodeURIComponent(p.isim)}" aria-pressed="${cmpSel.includes(p.isim)}">${cmpSel.includes(p.isim)?'✓ Seçildi':'⇄ Karşılaştır'}</button>`}
+        ${(p.modul || p.basit) ? '' : `<button type="button" class="cmp-btn ${cmpSel.includes(p.isim)?'on':''}" data-cmp="${encodeURIComponent(p.isim)}" aria-pressed="${cmpSel.includes(p.isim)}">${cmpSel.includes(p.isim)?'✓ Seçildi':'⇄ Karşılaştır'}</button>`}
       </div>
       <h2>${p.isim}</h2>
       <p class="indication">${p.endikasyon || ''}</p>
@@ -1062,7 +1062,7 @@
       </div>
     `;
     el.appendChild(head);
-    if(p.modul){ renderModulBody(el, p); return el; }
+    if(p.modul || p.basit){ renderModulBody(el, p); return el; }
 
     const isHyperosm = p.osmolarite && p.osmolarite > 400;
     const hn = document.createElement('div');

@@ -11352,6 +11352,120 @@ const PRODUCTS = [
     "deger": "30"
    }
   ]
+ },
+ {
+  "isim": "Abound",
+  "uretici": "Abbott",
+  "kcal": null,
+  "kcal100": null,
+  "protein100": null,
+  "lif100": 0.0,
+  "osmolarite": 407.0,
+  "lifVar": false,
+  "basit": true,
+  "endikasyon": "Yara iyileşmesi veya yağsız vücut kütlesinin yeniden yapılanması için destek gereken hastalarda diyet yönetimine ek olarak kullanılan toz takviye (arjinin + glutamin + HMB, portakal aromalı).",
+  "hedefKitle": "Erişkin",
+  "form": "Toz — 24 g saşe (30 saşe/kutu), su ile karıştırılır",
+  "diyabetik": false,
+  "renal": false,
+  "immun": false,
+  "per100g": {
+   "kcal": 372,
+   "protein": 61.7
+  },
+  "olcek": {
+   "g": 24,
+   "protein": 14.8,
+   "ad": "saşe"
+  },
+  "etiket": "Özel takviye",
+  "uyari": "Protein değeri serbest amino asitleri (arjinin, glutamin) kapsar; protein hedefi hesabına katılmaz. Fenilalanin içerir. Hiperozmolar (407 mOsm/l).",
+  "veriler": [
+   {
+    "kategori": "Makro",
+    "bilesen": "Enerji",
+    "birim": "kcal",
+    "hedef": "",
+    "deger": "372"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Protein",
+    "birim": "g",
+    "hedef": "",
+    "deger": "61.7"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Karbonhidrat",
+    "birim": "g",
+    "hedef": "",
+    "deger": "27.1"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Şekerler",
+    "birim": "g",
+    "hedef": "",
+    "deger": "4.6"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Yağ",
+    "birim": "g",
+    "hedef": "",
+    "deger": "0.10"
+   },
+   {
+    "kategori": "Makro",
+    "bilesen": "Doymuş Yağ",
+    "birim": "g",
+    "hedef": "",
+    "deger": "0.10"
+   },
+   {
+    "kategori": "Özel",
+    "bilesen": "L-arjinin",
+    "birim": "g",
+    "hedef": "",
+    "deger": "30.8"
+   },
+   {
+    "kategori": "Özel",
+    "bilesen": "L-glutamin",
+    "birim": "g",
+    "hedef": "",
+    "deger": "30.8"
+   },
+   {
+    "kategori": "Özel",
+    "bilesen": "HMB",
+    "birim": "g",
+    "hedef": "",
+    "deger": "5.4"
+   },
+   {
+    "kategori": "Elektrolit",
+    "bilesen": "Kalsiyum (Ca)",
+    "birim": "mg",
+    "hedef": "",
+    "deger": "896"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolarite",
+    "birim": "mOsm/l",
+    "hedef": "",
+    "deger": "407"
+   },
+   {
+    "kategori": "Fizikokimya",
+    "bilesen": "Osmolalite",
+    "birim": "mOsm/kgH2O",
+    "hedef": "",
+    "deger": "437"
+   }
+  ]
  }
 ];
 
