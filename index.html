@@ -408,6 +408,9 @@
   .cmp-slot span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;}
   .cmp-slot button{background:none; border:0; color:var(--text-dim); font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;}
   .cmp-go{padding:10px 16px; border-radius:var(--radius-m); border:0; background:var(--accent); color:#fff; font:700 13px var(--sans); cursor:pointer;}
+  @keyframes cmpGlow{0%,100%{box-shadow:0 0 0 0 rgba(31,143,120,0);}50%{box-shadow:0 0 0 5px rgba(31,143,120,0.28), 0 0 14px rgba(31,143,120,0.45);}}
+  .cmp-go.glow{animation:cmpGlow 1.3s ease-in-out 2;}
+  @media (prefers-reduced-motion:reduce){.cmp-go.glow{animation:none;}}
   .cmp-go:disabled{opacity:.4; cursor:default;}
   body.cmp-open-bar main{padding-bottom:84px;}
   .cmp-modal{position:fixed; inset:0; z-index:80; display:none; background:var(--bg); flex-direction:column;}
@@ -1272,6 +1275,7 @@
   function num(v){ const m = String(v||'').match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; }
   function esc(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+  let cmpPrevLen = cmpSel.length;
   function updateCmpBar(){
     cmpBar.classList.toggle('show', cmpSel.length > 0);
     document.body.classList.toggle('cmp-open-bar', cmpSel.length > 0);
@@ -1285,7 +1289,11 @@
         el.textContent = i === 0 ? '1. ürün seç' : '2. ürünü seç';
       }
     });
-    document.getElementById('cmpGo').disabled = cmpSel.length < 2;
+    const go = document.getElementById('cmpGo');
+    go.disabled = cmpSel.length < 2;
+    if(cmpSel.length === 2 && cmpPrevLen < 2){ go.classList.remove('glow'); void go.offsetWidth; go.classList.add('glow'); }
+    if(cmpSel.length < 2) go.classList.remove('glow');
+    cmpPrevLen = cmpSel.length;
   }
   function saveCmp(){ try{ localStorage.setItem('enteral_cmp', JSON.stringify(cmpSel)); }catch(e){} }
   document.getElementById('main').addEventListener('click', e => {
